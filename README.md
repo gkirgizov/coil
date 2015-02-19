@@ -1,5 +1,4 @@
 # coil
-For home, for tasks.
+~ Repository for training tasks ~
 
-St. Petersburg State Uniersity (SPBU)
-~ it's an image of my studying process ~
+~ Studying process in the St. Petersburg State Uniersity (SPBU) ~
