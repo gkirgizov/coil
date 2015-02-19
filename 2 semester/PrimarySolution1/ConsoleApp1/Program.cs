@@ -64,36 +64,36 @@ namespace ConsoleApp1
             int centerI = (int)matrixSize / 2;
             int helpingI = 0;
 
-            int r = centerI;
-            int c = centerI;
-            Console.WriteLine(matrix[r, c]);
-            while (r < matrixSize - 1 && c < matrixSize - 1)
+            int row = centerI;
+            int column = centerI;
+            Console.WriteLine(matrix[row, column]);
+            while (row < matrixSize - 1 && column < matrixSize - 1)
             {
                 ++helpingI;
-                ++c;
-                for (; r >= centerI - helpingI; --r)
+                ++column;
+                for (; row >= centerI - helpingI; --row)
                 {
-                    Console.WriteLine(matrix[r, c]);
+                    Console.WriteLine(matrix[row, column]);
                 }
-                ++r;
-                --c;
-                for (; c >= centerI - helpingI; --c)
+                ++row;
+                --column;
+                for (; column >= centerI - helpingI; --column)
                 {
-                    Console.WriteLine(matrix[r, c]);
+                    Console.WriteLine(matrix[row, column]);
                 }
-                ++c;
-                ++r;
-                for (; r <= centerI + helpingI; ++r)
+                ++column;
+                ++row;
+                for (; row <= centerI + helpingI; ++row)
                 {
-                    Console.WriteLine(matrix[r, c]);                    
+                    Console.WriteLine(matrix[row, column]);                    
                 }
-                --r;
-                ++c;
-                for (; c <= centerI + helpingI; ++c)
+                --row;
+                ++column;
+                for (; column <= centerI + helpingI; ++column)
                 {
-                    Console.WriteLine(matrix[r, c]);
+                    Console.WriteLine(matrix[row, column]);
                 }
-                --c;
+                --column;
             }
         }
 
