@@ -61,35 +61,35 @@ namespace ConsoleApp1
                 return;
             }
 
-            int centerI = (int)matrixSize / 2;
-            int helpingI = 0;
+            int centerIndex = (int)matrixSize / 2;
+            int epsilonIndex = 0;
 
-            int row = centerI;
-            int column = centerI;
+            int row = centerIndex;
+            int column = centerIndex;
             Console.WriteLine(matrix[row, column]);
             while (row < matrixSize - 1 && column < matrixSize - 1)
             {
-                ++helpingI;
+                ++epsilonIndex;
                 ++column;
-                for (; row >= centerI - helpingI; --row)
+                for (; row >= centerIndex - epsilonIndex; --row)
                 {
                     Console.WriteLine(matrix[row, column]);
                 }
                 ++row;
                 --column;
-                for (; column >= centerI - helpingI; --column)
+                for (; column >= centerIndex - epsilonIndex; --column)
                 {
                     Console.WriteLine(matrix[row, column]);
                 }
                 ++column;
                 ++row;
-                for (; row <= centerI + helpingI; ++row)
+                for (; row <= centerIndex + epsilonIndex; ++row)
                 {
                     Console.WriteLine(matrix[row, column]);                    
                 }
                 --row;
                 ++column;
-                for (; column <= centerI + helpingI; ++column)
+                for (; column <= centerIndex + epsilonIndex; ++column)
                 {
                     Console.WriteLine(matrix[row, column]);
                 }
@@ -117,7 +117,7 @@ namespace ConsoleApp1
             static void Main(string[] args)
             {
                 int[,] i = { { 11, 14, 13, 12, 15 }, { 23, 24, 21, 22, 25 }, { 34, 31, 33, 32, 35 }, { 42, 43, 41, 44, 45 }, {51, 52, 53, 54, 55} };
-                SimpleMeth.MatrixPrintSpiral(i, 5);
+                //SimpleMeth.MatrixPrintSpiral(i, 5);
             }
         }
     }
