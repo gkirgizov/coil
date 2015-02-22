@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Task2
 {
@@ -12,7 +13,15 @@ namespace Task2
         void Push(T newData);
 
         T Pop();
+
+        T Top();
     }
+    
+    //TODO: LinkedStack    
+    //class LinkedStack<T> : MyStack<T>
+    //{
+
+    //}
 
     class ArrayStack<T> : MyStack<T>
     {
@@ -67,9 +76,17 @@ namespace Task2
             --this.size;
             return returned;
         }
-    }
 
-    //TODO: LinkedStack
+        public T Top()
+        {
+            if (this.size >= 0)
+            {
+                return this.data[0];
+            }
+            //exception
+            return default(T);
+        }
+    }
 
     interface MyList<T>
     {
@@ -78,9 +95,11 @@ namespace Task2
             get;
         }
 
-        void Add(T newData, int index);
+        void Add(T newData, int index = -1);
 
         T Get(uint index);
+
+        bool Search(T searchedData);
 
         void Delete(T deletedData);
     }
@@ -204,6 +223,23 @@ namespace Task2
             return default(T);
         }
 
+        public bool Search(T searchedData)
+        {
+            if (this.head != null)
+            {
+                LinkedListElement<T> ptr = this.head;
+                while (ptr != this.tail)
+                {
+                    if (ptr.Data.Equals(searchedData))
+                    {
+                        return true;
+                    }
+                    ptr = ptr.Next;
+                }
+            }
+            return false;
+        }
+
         public void Delete(T deletedData)
         {
             LinkedListElement<T> ptr = this.head;
@@ -228,11 +264,38 @@ namespace Task2
         }
     }
 
-    //TODO: HTable
     class HashTable<T>
     {
-        MyList<T> table;
+        private List<MyList<T>> table;
 
+        public HashTable(uint startCapacity)
+        {
+            this.table = new List<MyList<T>>((int)startCapacity);
+        }
+
+        public void Add(T newData)
+        {
+            int hash = Math.Abs(newData.GetHashCode() % table.Capacity);
+            table[hash].Add(newData);
+        }
+
+        public void Delete(T deletedData)
+        {
+            int hash = Math.Abs(deletedData.GetHashCode() % table.Capacity);
+            table[hash].Delete(deletedData);
+        }
+
+        public bool Search(T searchedData)
+        {
+            foreach (MyList<T> dataList in table)
+            {
+                if (dataList.Search(searchedData))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     class Program
