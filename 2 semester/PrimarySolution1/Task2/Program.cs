@@ -2,23 +2,34 @@
 
 namespace Task2
 {
-    class MyStack<T>
+    interface MyStack<T>
+    {
+        uint Size
+        {
+            get;
+        }
+
+        void Push(T newData);
+
+        T Pop();
+    }
+
+    class ArrayStack<T> : MyStack<T>
     {
         private uint capacity;
         private uint size;
         private T[] data;
 
-        public MyStack()
+        public ArrayStack(uint startCapacity = 128)
         {
-            this.data = new T[128];
-            this.capacity = 128;
+            this.data = new T[startCapacity];
+            this.capacity = startCapacity;
             this.size = 0;
         }
 
-        public MyStack(T newData)
+        public ArrayStack(T newData, uint startCapacity = 128)
+            :this(startCapacity)
         {
-            this.data = new T[128];
-            this.capacity = 128;
             this.size = 1;
             this.data[0] = newData;
         }
@@ -43,7 +54,6 @@ namespace Task2
                 {
                     newDataArray[i] = this.data[i];
                 }
-                //delete somehow old data array?
                 this.data = newDataArray;
             }
             this.data[this.size] = newData;
@@ -59,45 +69,83 @@ namespace Task2
         }
     }
 
-    class LinkedListElement<T>
+    //TODO: LinkedStack
+
+    interface MyList<T>
     {
-        private T data;
-        public LinkedListElement<T> next;
-        public LinkedListElement<T> prev;
-
-        public LinkedListElement()
-        { }
-
-        public LinkedListElement(T newData)
+        uint Size
         {
-            this.data = newData;
+            get;
         }
 
-        public T Data
-        {
-            set { data = value; }
-            get { return data; }
-        }
+        void Add(T newData, int index);
+
+        T Get(uint index);
+
+        void Delete(T deletedData);
     }
 
-    class LinkedList<T>
+    class LinkedList<T> : MyList<T>
     {
+        private class LinkedListElement<T2>
+        {
+            private T2 data;
+            private LinkedListElement<T2> next;
+            private LinkedListElement<T2> prev;
+
+            public LinkedListElement()
+            { }
+
+            public LinkedListElement(T2 newData)
+            {
+                this.data = newData;
+            }
+
+            public LinkedListElement<T2> Next
+            {
+                set { next = value; }
+                get { return next; }
+            }
+
+            public LinkedListElement<T2> Prev
+            {
+                set { prev = value; }
+                get { return prev; }
+            }
+
+            public T2 Data
+            {
+                set { data = value; }
+                get { return data; }
+            }
+        }
+
         private LinkedListElement<T> head;
         private LinkedListElement<T> tail;
+        private uint size;
 
         public LinkedList()
-        { }
+        {
+            this.size = 0;
+        }
 
         public LinkedList(T newData)
         {
             this.tail = new LinkedListElement<T>(newData);
             this.head = this.tail;
+            this.size = 1;
+        }
+
+        public uint Size
+        {
+            get { return size; }
         }
 
         //Add new element in list to spot with index.
         //If index = 0 add to head. If index < 0 add to tail.
         public void Add(T addedData, int index = -1)
         {
+            ++this.size;
             LinkedListElement<T> newElement = new LinkedListElement<T>(addedData);
             if (this.head != null)
             {
@@ -108,8 +156,8 @@ namespace Task2
                 }
                 else if (index == 0)
                 {
-                    newElement.next = this.head;
-                    this.head.prev = newElement;
+                    newElement.Next = this.head;
+                    this.head.Prev = newElement;
                     this.head = newElement;
                     return;
                 }
@@ -117,18 +165,18 @@ namespace Task2
                 {
                     for (; ptr != this.tail; --index)
                     {
-                        ptr = ptr.next;
+                        ptr = ptr.Next;
                         if (index == 0)
                         {
-                            newElement.next = ptr;
-                            newElement.prev = ptr.prev;
-                            ptr.prev = newElement;
+                            newElement.Next = ptr;
+                            newElement.Prev = ptr.Prev;
+                            ptr.Prev = newElement;
                             return;
                         }
                     }
                 }
-                newElement.prev = ptr;
-                ptr.next = newElement;
+                newElement.Prev = ptr;
+                ptr.Next = newElement;
                 this.tail = newElement;
             }
             else
@@ -136,6 +184,24 @@ namespace Task2
                 this.tail = newElement;
                 this.head = this.tail;
             }
+        }
+
+        public T Get(uint index)
+        {
+            if (this.head != null)
+            {
+                LinkedListElement<T> ptr = this.head;
+                for (; ptr != this.tail && index >= 0; --index)
+                {
+                    ptr = ptr.Next;
+                }
+                if (index == 0)
+                {
+                    return ptr.Data;
+                }
+            }
+            //exception
+            return default(T);
         }
 
         public void Delete(T deletedData)
@@ -147,48 +213,39 @@ namespace Task2
                 {
                     if (this.head == this.tail)
                     {
-                        //delete ptr?
                         this.head = null;
                         this.tail = null;
                         ptr = null;
                     }
                     else
                     {
-                        //delete ptr?
-                        ptr.next.prev = ptr.prev;
-                        ptr.prev.next = ptr.next;
+                        ptr.Next.Prev = ptr.Prev;
+                        ptr.Prev.Next = ptr.Next;
                         ptr = null;
                     }
                 }
             }
         }
+    }
 
-        public uint Size()
-        {
-            uint listSize = 0;
-            if (this.head != null)
-            {
-                LinkedListElement<T> ptr = this.head;
-                for (; ptr.next != null; ++listSize)
-                {
-                    ptr = ptr.next;
-                }
-            }
-            return listSize;
-        }
+    //TODO: HTable
+    class HashTable<T>
+    {
+        MyList<T> table;
 
-        class Program
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
         {
-            static void Main(string[] args)
-            {
-                //MyStack<int> stck = new MyStack<int>();
-                //stck.Push(27);
-                //stck.Push(21);
-                //Console.WriteLine(stck.Pop());
-                //Console.WriteLine(stck.Pop());
-                LinkedList<int> lst = new LinkedList<int>(55);
-                Console.Write(" ___ ");
-            }
+            //ArrayStack<int> stck = new ArrayStack<int>();
+            //stck.Push(27);
+            //stck.Push(21);
+            //Console.WriteLine(stck.Pop());
+            //Console.WriteLine(stck.Pop());
+            LinkedList<int> lst = new LinkedList<int>(55);
+            Console.Write(" ___ ");
         }
     }
 }
