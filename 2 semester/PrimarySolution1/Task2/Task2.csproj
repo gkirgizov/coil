@@ -41,6 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayStack.cs" />
+    <Compile Include="CalcStack.cs" />
+    <Compile Include="HashTable.cs" />
+    <Compile Include="LinkedList.cs" />
+    <Compile Include="LinkedStack.cs" />
+    <Compile Include="MyList.cs" />
+    <Compile Include="MyStack.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
