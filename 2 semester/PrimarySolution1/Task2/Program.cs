@@ -16,12 +16,85 @@ namespace Task2
 
         T Top();
     }
-    
-    //TODO: LinkedStack    
-    //class LinkedStack<T> : MyStack<T>
-    //{
+  
+    class LinkedStack<T> : MyStack<T>
+    {
+        private class LinkedStackElement<T2>
+        {
+            private T2 data;
+            private LinkedStackElement<T2> prev;
 
-    //}
+            public LinkedStackElement()
+            { }
+
+            public LinkedStackElement(T2 newData)
+            {
+                this.data = newData;
+            }
+
+            public T2 Data
+            {
+                set { data = value; }
+                get { return data; }
+            }
+
+            public LinkedStackElement<T2> Prev
+            {
+                set { prev = value; }
+                get { return prev; }
+            }
+        }
+
+        private LinkedStackElement<T> head;
+        private uint size;
+
+        public LinkedStack()
+        {
+            this.size = 0;
+        }
+
+        public LinkedStack(T newData)
+        {
+            this.head = new LinkedStackElement<T>(newData);
+            this.size = 1;
+        }
+
+        public uint Size
+        {
+            get { return this.size; }
+        }
+
+        public void Push(T newData)
+        {
+            LinkedStackElement<T> newElement = new LinkedStackElement<T>(newData);
+            newElement.Prev = this.head;
+            this.head = newElement;
+            ++this.size;
+        }
+
+        public T Pop()
+        {
+            if (this.head != null)
+            {
+                T returned = this.head.Data;
+                this.head = this.head.Prev;
+                --this.size;
+                return returned;
+            }
+            //exception
+            return default(T);
+        }
+
+        public T Top()
+        {
+            if (this.head != null)
+            {
+                return this.head.Data;
+            }
+            //exception
+            return default(T);
+        }
+    }
 
     class ArrayStack<T> : MyStack<T>
     {
@@ -37,7 +110,7 @@ namespace Task2
         }
 
         public ArrayStack(T newData, uint startCapacity = 128)
-            :this(startCapacity)
+            : this(startCapacity)
         {
             this.size = 1;
             this.data[0] = newData;
@@ -69,6 +142,7 @@ namespace Task2
             ++this.size;
         }
 
+        //TODO exception
         public T Pop()
         {
             T returned = this.data[this.size - 1];
@@ -210,7 +284,7 @@ namespace Task2
             if (this.head != null)
             {
                 LinkedListElement<T> ptr = this.head;
-                for (; ptr != this.tail && index >= 0; --index)
+                for (; ptr != this.tail && index > 0; --index)
                 {
                     ptr = ptr.Next;
                 }
@@ -228,7 +302,7 @@ namespace Task2
             if (this.head != null)
             {
                 LinkedListElement<T> ptr = this.head;
-                while (ptr != this.tail)
+                while (ptr != null)
                 {
                     if (ptr.Data.Equals(searchedData))
                     {
@@ -251,15 +325,27 @@ namespace Task2
                     {
                         this.head = null;
                         this.tail = null;
-                        ptr = null;
+                    }
+                    else if (ptr == this.tail)
+                    {
+                        this.tail = this.tail.Prev;
+                        this.tail.Next = null;
+                    }
+                    else if (ptr == this.head)
+                    {
+                        this.head = this.head.Next;
+                        this.head.Prev = null;
                     }
                     else
                     {
                         ptr.Next.Prev = ptr.Prev;
                         ptr.Prev.Next = ptr.Next;
-                        ptr = null;
                     }
+                    ptr = null;
+                    --this.size;
+                    return;
                 }
+                ptr = ptr.Next;
             }
         }
     }
@@ -302,12 +388,9 @@ namespace Task2
     {
         static void Main(string[] args)
         {
-            //ArrayStack<int> stck = new ArrayStack<int>();
-            //stck.Push(27);
-            //stck.Push(21);
-            //Console.WriteLine(stck.Pop());
-            //Console.WriteLine(stck.Pop());
-            LinkedList<int> lst = new LinkedList<int>(55);
+            MyList<int> lst = new LinkedList<int>(55);
+            lst.Add(44);
+            lst.Add(33);
             Console.Write(" ___ ");
         }
     }
