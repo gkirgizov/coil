@@ -357,30 +357,41 @@ namespace Task2
         public HashTable(uint startCapacity)
         {
             this.table = new List<MyList<T>>((int)startCapacity);
+            for (; startCapacity > 0; --startCapacity)
+            {
+                this.table.Add(null);
+            }
         }
 
+        private int Hash(T hashedData)
+        {
+            return Math.Abs(hashedData.GetHashCode() % table.Capacity);
+        }
+
+        //How to change LinkedList<T> to the parent MyList<T> ?
         public void Add(T newData)
         {
-            int hash = Math.Abs(newData.GetHashCode() % table.Capacity);
-            table[hash].Add(newData);
+            int hash = Hash(newData);
+            if (table[hash] == null)
+            {
+                table[hash] = new LinkedList<T>(newData);
+            }
+            else
+            {
+                table[hash].Add(newData);
+            }
         }
 
         public void Delete(T deletedData)
         {
-            int hash = Math.Abs(deletedData.GetHashCode() % table.Capacity);
+            int hash = Hash(deletedData);
             table[hash].Delete(deletedData);
         }
 
         public bool Search(T searchedData)
         {
-            foreach (MyList<T> dataList in table)
-            {
-                if (dataList.Search(searchedData))
-                {
-                    return true;
-                }
-            }
-            return false;
+            int hash = Hash(searchedData);
+            return this.table[hash].Search(searchedData);
         }
     }
 
@@ -388,10 +399,32 @@ namespace Task2
     {
         static void Main(string[] args)
         {
-            MyList<int> lst = new LinkedList<int>(55);
-            lst.Add(44);
-            lst.Add(33);
-            Console.Write(" ___ ");
+            //MyList<int> lst = new LinkedList<int>(55);
+            //lst.Add(44);
+            //lst.Add(33);
+
+            //HashTable<string> ht = new HashTable<string>(7);
+            //ht.Add("first");
+            //ht.Add("second");
+            //ht.Add("third");
+            //ht.Add("fourth");
+            //ht.Add("fifth");
+            //ht.Add("sixth");
+            //ht.Add("seventh");
+            //ht.Add("eighth");
+            //ht.Add("ninth");
+            //ht.Add("ten");
+            //ht.Add("eleven");
+            //ht.Add("twelve");
+            //ht.Add("thirteen");
+            //ht.Add("fourteen");
+
+            //ht.Delete("second");
+            //ht.Delete("ten");
+            //ht.Delete("first");
+            //ht.Delete("something");
+
+            //Console.WriteLine(ht.Search("something"));
         }
     }
 }
