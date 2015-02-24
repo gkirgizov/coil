@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2
 {
+    //Stack calculator
     class CalcStack
     {
         private static int Operation(char key, int first, int second)
@@ -33,7 +31,8 @@ namespace Task2
             return default(Int32);
         }
 
-        public static int Calculate(ref string inputString, MyStack<int> stack)
+        //Calculate expression inputted in the reverse polish notation
+        public static int Calculate(string inputString, MyStack<int> stack)
         {
             char[] separator = new char[] { ' ' };
             string[] tokens = inputString.Split(separator, StringSplitOptions.RemoveEmptyEntries);

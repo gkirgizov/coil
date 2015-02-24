@@ -1,40 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2
 {
+    //List based on links
     class LinkedList<T> : MyList<T>
     {
-        private class LinkedListElement<T2>
+        private class LinkedListElement<T>
         {
-            private T2 data;
-            private LinkedListElement<T2> next;
-            private LinkedListElement<T2> prev;
+            private T data;
+            private LinkedListElement<T> next;
+            private LinkedListElement<T> prev;
 
             public LinkedListElement()
             { }
 
-            public LinkedListElement(T2 newData)
+            public LinkedListElement(T newData)
             {
                 this.data = newData;
             }
 
-            public LinkedListElement<T2> Next
+            public LinkedListElement<T> Next
             {
                 set { next = value; }
                 get { return next; }
             }
 
-            public LinkedListElement<T2> Prev
+            public LinkedListElement<T> Prev
             {
                 set { prev = value; }
                 get { return prev; }
             }
 
-            public T2 Data
+            public T Data
             {
                 set { data = value; }
                 get { return data; }
@@ -57,6 +54,7 @@ namespace Task2
             this.size = 1;
         }
 
+        //Returns number of items in list
         public uint Size
         {
             get { return size; }
@@ -107,6 +105,7 @@ namespace Task2
             }
         }
 
+        //Returns item by index, returns default value if index is out of range
         public T Get(uint index)
         {
             if (this.head != null)
@@ -125,6 +124,7 @@ namespace Task2
             return default(T);
         }
 
+        //Returns true if item is in the list
         public bool Search(T searchedData)
         {
             if (this.head != null)
@@ -142,6 +142,7 @@ namespace Task2
             return false;
         }
 
+        //Delete item by value
         public void Delete(T deletedData)
         {
             LinkedListElement<T> ptr = this.head;

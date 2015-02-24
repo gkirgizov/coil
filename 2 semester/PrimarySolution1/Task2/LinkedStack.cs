@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task2
 {
+    //Stack based on links
     class LinkedStack<T> : MyStack<T>
     {
         private class LinkedStackElement<T2>
@@ -48,11 +45,13 @@ namespace Task2
             this.size = 1;
         }
 
+        //Return number of items in stack
         public uint Size
         {
             get { return this.size; }
         }
 
+        //Add item to stack
         public void Push(T newData)
         {
             LinkedStackElement<T> newElement = new LinkedStackElement<T>(newData);
@@ -61,6 +60,7 @@ namespace Task2
             ++this.size;
         }
 
+        //Delete top item and return it
         public T Pop()
         {
             if (this.head != null)
@@ -74,6 +74,7 @@ namespace Task2
             return default(T);
         }
 
+        //Return top item
         public T Top()
         {
             if (this.head != null)

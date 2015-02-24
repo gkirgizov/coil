@@ -2,6 +2,7 @@
 
 namespace Task2
 {
+    //Stack based on the array
     class ArrayStack<T> : MyStack<T>
     {
         private uint capacity;
@@ -21,17 +22,20 @@ namespace Task2
             this.size = 1;
             this.data[0] = newData;
         }
-
+        
+        //Return number of the elements in the stack
         public uint Size
         {
             get { return this.size; }
         }
 
+        //Return max size of the stack without expansion
         public uint Capacity
         {
             get { return this.capacity; }
         }
 
+        //Add item to the stack
         public void Push(T newData)
         {
             if (this.size == this.capacity)
@@ -48,6 +52,7 @@ namespace Task2
             ++this.size;
         }
 
+        //Delete top item and returns it
         public T Pop()
         {
             if (this.size > 0)
@@ -61,6 +66,7 @@ namespace Task2
             return default(T);
         }
 
+        //Return top item
         public T Top()
         {
             if (this.size > 0)
