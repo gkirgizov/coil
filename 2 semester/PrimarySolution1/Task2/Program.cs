@@ -34,7 +34,7 @@ namespace Task2
             //Console.WriteLine(ht.Search("something"));
 
             string inp = Console.ReadLine();
-            MyStack<int> stack = new LinkedStack<int>();
+            IStack<int> stack = new LinkedStack<int>();
             Console.WriteLine(CalcStack.Calculate(inp, stack));
         }
     }

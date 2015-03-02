@@ -2,8 +2,11 @@
 
 namespace Task2
 {
-    //List based on links
-    class LinkedList<T> : MyList<T>
+    /// <summary>
+    /// List based on links
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class LinkedList<T> : IList<T>
     {
         private class LinkedListElement<T>
         {
@@ -40,7 +43,7 @@ namespace Task2
 
         private LinkedListElement<T> head;
         private LinkedListElement<T> tail;
-        private uint size;
+        private int size;
 
         public LinkedList()
         {
@@ -54,14 +57,15 @@ namespace Task2
             this.size = 1;
         }
 
-        //Returns number of items in list
-        public uint Size
-        {
-            get { return size; }
-        }
+        /// <summary>
+        /// Returns number of items in list
+        /// </summary>
+        public int Size { get { return this.size; } }
 
-        //Add new element in list to spot with index.
-        //If index = 0 add to head. If index < 0 add to tail.
+        /// <summary>
+        /// Add new element in list to spot with index.
+        /// If index = 0 add to head. If index < 0 add to tail.
+        /// </summary>
         public void Add(T addedData, int index = -1)
         {
             ++this.size;
@@ -105,8 +109,10 @@ namespace Task2
             }
         }
 
-        //Returns item by index, returns default value if index is out of range
-        public T Get(uint index)
+        /// <summary>
+        /// Returns item by index, returns default value if index is out of range
+        /// </summary>
+        public T Get(int index)
         {
             if (this.head != null)
             {
@@ -124,7 +130,9 @@ namespace Task2
             return default(T);
         }
 
-        //Returns true if item is in the list
+        /// <summary>
+        /// Returns true if item is in the list
+        /// </summary>
         public bool Search(T searchedData)
         {
             if (this.head != null)
@@ -142,7 +150,9 @@ namespace Task2
             return false;
         }
 
-        //Delete item by value
+        /// <summary>
+        /// Delete item by value
+        /// </summary>
         public void Delete(T deletedData)
         {
             LinkedListElement<T> ptr = this.head;

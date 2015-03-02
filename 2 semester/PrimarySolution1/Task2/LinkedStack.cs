@@ -2,37 +2,40 @@
 
 namespace Task2
 {
-    //Stack based on links
-    class LinkedStack<T> : MyStack<T>
+    /// <summary>
+    /// Stack based on links
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    class LinkedStack<T> : IStack<T>
     {
-        private class LinkedStackElement<T2>
+        private class LinkedStackElement<T>
         {
-            private T2 data;
-            private LinkedStackElement<T2> prev;
+            private T data;
+            private LinkedStackElement<T> prev;
 
             public LinkedStackElement()
             { }
 
-            public LinkedStackElement(T2 newData)
+            public LinkedStackElement(T newData)
             {
                 this.data = newData;
             }
 
-            public T2 Data
+            public T Data
             {
                 set { data = value; }
                 get { return data; }
             }
 
-            public LinkedStackElement<T2> Prev
+            public LinkedStackElement<T> Prev
             {
                 set { prev = value; }
                 get { return prev; }
             }
         }
 
+        private int size;        
         private LinkedStackElement<T> head;
-        private uint size;
 
         public LinkedStack()
         {
@@ -45,13 +48,14 @@ namespace Task2
             this.size = 1;
         }
 
-        //Return number of items in stack
-        public uint Size
-        {
-            get { return this.size; }
-        }
+        /// <summary>
+        /// Return number of items in stack
+        /// </summary>
+        public int Size { get { return this.size; } }
 
-        //Add item to stack
+        /// <summary>
+        /// Add item to stack
+        /// </summary>
         public void Push(T newData)
         {
             LinkedStackElement<T> newElement = new LinkedStackElement<T>(newData);
@@ -60,7 +64,9 @@ namespace Task2
             ++this.size;
         }
 
-        //Delete top item and return it
+        /// <summary>
+        /// Delete top item and return it
+        /// </summary>
         public T Pop()
         {
             if (this.head != null)
@@ -74,7 +80,9 @@ namespace Task2
             return default(T);
         }
 
-        //Return top item
+        /// <summary>
+        /// Return top item
+        /// </summary>
         public T Top()
         {
             if (this.head != null)

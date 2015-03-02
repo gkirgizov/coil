@@ -3,14 +3,17 @@ using System.Collections.Generic;
 
 namespace Task2
 {
-    //Hash table based on lists
+    /// <summary>
+    /// Hash table based on lists
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     class HashTable<T>
     {
-        private List<MyList<T>> table;
+        private List<IList<T>> table;
 
-        public HashTable(uint startCapacity)
+        public HashTable(int startCapacity)
         {
-            this.table = new List<MyList<T>>((int)startCapacity);
+            this.table = new List<IList<T>>((int)startCapacity);
             for (; startCapacity > 0; --startCapacity)
             {
                 this.table.Add(null);
@@ -22,7 +25,9 @@ namespace Task2
             return Math.Abs(hashedData.GetHashCode() % table.Capacity);
         }
 
-        //Add item to hash table
+        /// <summary>
+        /// Add item to hash table
+        /// </summary>
         public void Add(T newData)
         {
             int hash = Hash(newData);
@@ -36,14 +41,18 @@ namespace Task2
             }
         }
 
-        //Delete item from hash table if it exist
+        /// <summary>
+        /// Delete item from hash table if it exist
+        /// </summary>
         public void Delete(T deletedData)
         {
             int hash = Hash(deletedData);
             table[hash].Delete(deletedData);
         }
 
-        //Returns true if item is in the hash table
+        /// <summary>
+        /// Returns true if item is in the hash table
+        /// </summary>
         public bool Search(T searchedData)
         {
             int hash = Hash(searchedData);
