@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ArrayStack.cs" />
     <Compile Include="CalcStack.cs" />
+    <Compile Include="HashFunctions.cs" />
     <Compile Include="HashTable.cs" />
     <Compile Include="LinkedList.cs" />
     <Compile Include="LinkedStack.cs" />

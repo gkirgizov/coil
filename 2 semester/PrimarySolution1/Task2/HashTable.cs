@@ -7,9 +7,14 @@ namespace Task2
     /// Hash table based on lists
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class HashTable<T>
+    public class HashTable<T>
     {
         private List<IList<T>> table;
+
+        /// <summary>
+        /// Hash function without hash table size correction
+        /// </summary>
+        public Func<T, int> HashFunction { get; set; }
 
         public HashTable(int startCapacity)
         {
@@ -18,11 +23,26 @@ namespace Task2
             {
                 this.table.Add(null);
             }
+            this.HashFunction = HashFunctionDefault;
         }
 
-        private int Hash(T hashedData)
+        public HashTable(int startCapacity, Func<T, int> hashFunc)
+            : this(startCapacity)
         {
-            return Math.Abs(hashedData.GetHashCode() % table.Capacity);
+            this.HashFunction = hashFunc;
+        }
+
+        /// <summary>
+        /// Return hash code of the data according to hash table size
+        /// </summary>
+        public int Hash(T hashedData)
+        {
+            return HashFunction(hashedData) % table.Capacity;
+        }
+
+        private int HashFunctionDefault(T hashedData)
+        {
+            return Math.Abs(hashedData.GetHashCode());
         }
 
         /// <summary>
