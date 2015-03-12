@@ -64,9 +64,9 @@ namespace Task2
 
         /// <summary>
         /// Add new element in list to spot with index.
-        /// If index = 0 add to head. If index < 0 add to tail.
+        /// If index = 0 add to head. If index less 0 add to tail.
         /// </summary>
-        public void Add(T addedData, int index = -1)
+        public virtual void Add(T addedData, int index = -1)
         {
             ++this.size;
             LinkedListElement<T> newElement = new LinkedListElement<T>(addedData);
@@ -151,15 +151,17 @@ namespace Task2
         }
 
         /// <summary>
-        /// Delete item by value
+        /// Delete first entry of item by value
         /// </summary>
         public void Delete(T deletedData)
         {
             LinkedListElement<T> ptr = this.head;
+            bool isDeletionSuccesful = false;
             while (ptr != null)
             {
                 if (deletedData.Equals(ptr.Data))
                 {
+                    isDeletionSuccesful = true;
                     if (this.head == this.tail)
                     {
                         this.head = null;
@@ -185,6 +187,10 @@ namespace Task2
                     return;
                 }
                 ptr = ptr.Next;
+            }
+            if (!isDeletionSuccesful)
+            {
+                throw new DeleteNonexistentItemException();
             }
         }
     }

@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Task2;
 
-namespace Task2.Tests
+namespace Tests.Task2
 {
     /// <summary>
     /// Test class for linked list contains int
@@ -56,6 +56,7 @@ namespace Task2.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DeleteNonexistentItemException))]
         public void DeleteTest()
         {
             tList.Add(1);

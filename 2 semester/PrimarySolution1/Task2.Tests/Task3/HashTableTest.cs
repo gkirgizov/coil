@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Task2;
 
-namespace Task2.Tests
+namespace Tests.Task2
 {
     /// <summary>
     /// Tests to hash table with string type of the data
