@@ -57,6 +57,8 @@
     <Compile Include="Task4\ArithmeticTreeCalculatorTest.cs" />
     <Compile Include="Task4\OperandTest.cs" />
     <Compile Include="Task4\UniqueListTest.cs" />
+    <Compile Include="Task5\FunctionsTest.cs" />
+    <Compile Include="Task5\ConsoleArrowMoverTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Task2\Task2.csproj">
@@ -66,6 +68,10 @@
     <ProjectReference Include="..\Task4\Task4.csproj">
       <Project>{b007f1e7-5727-4fcf-a9f7-9c2bdb2f96b1}</Project>
       <Name>Task4</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Task5\Task5.csproj">
+      <Project>{eb3cc4e6-0f60-43bf-b269-7fb4cc3a325a}</Project>
+      <Name>Task5</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
