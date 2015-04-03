@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ControlWork1\QueuePriorityIntTest.cs" />
     <Compile Include="Task4\OperatorTest.cs" />
     <Compile Include="Task3\HashTableTest.cs" />
     <Compile Include="Task3\LinkedListTest.cs" />
@@ -61,6 +62,10 @@
     <Compile Include="Task5\ConsoleArrowMoverTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ControlWork1\ControlWork1.csproj">
+      <Project>{bd3fcb79-324b-461f-b1c8-34a056be64ee}</Project>
+      <Name>ControlWork1</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Task2\Task2.csproj">
       <Project>{b7d2116c-94e0-42dd-804b-02306f263ca3}</Project>
       <Name>Task2</Name>
