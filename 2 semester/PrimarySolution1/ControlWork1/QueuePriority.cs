@@ -22,6 +22,9 @@ namespace ControlWork1
 
         public int Size { get; private set; }
 
+        /// <summary>
+        /// Add item to prioruty queue
+        /// </summary>
         public void Enqueue(T data, int priority)
         {
             var newItem = new QueuePriorityItem<T>(data, priority);
@@ -60,6 +63,10 @@ namespace ControlWork1
             ++this.Size;
         }
 
+        /// <summary>
+        /// Delete item from priority queue
+        /// </summary>
+        /// <returns></returns>
         public T Dequeue()
         {
             if (this.Size == 0)
@@ -74,6 +81,7 @@ namespace ControlWork1
         }
 
         private QueuePriorityItem<T> head = null;
+
         private QueuePriorityItem<T> tail = null;
 
         private class QueuePriorityItem<T>
