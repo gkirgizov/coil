@@ -1,24 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Task6
 {
     public partial class Calculator : Form
     {
-        private static CalculatorCore core = new CalculatorCore();
-
         public Calculator()
         {
             InitializeComponent();
             this.ResultTextBox.Text = "0";
         }
+
+        private static CalculatorCore core = new CalculatorCore();
 
         private void ButtonBackspaceClick(object sender, EventArgs e)
         {
@@ -74,6 +67,7 @@ namespace Task6
             core.IsPointLast = false;
             core.IsDigitsInputted = false;
             core.IsOperatorInputted = false;
+            core.ActualResultsBufferIndex = 0;
             this.ResultTextBox.Text = "0";
         }
         
@@ -167,14 +161,22 @@ namespace Task6
                 var result = DoOperation(core.LastOperator);
                 core.IsOperatorInputted = false;
 
-                string formattedResult = String.Format("{0:F2}", result);
-                this.ResultTextBox.Text = formattedResult;
+                AddToJournal(result, false);
+                FormatAndWriteToResultBox(result);
 
                 this.InputTextBox.Clear();
                 core.IsDigitsInputted = false;
             }
         }
 
+        private void ResultsJournalSelectedIndexChanged(object sender, EventArgs e)
+        {
+            ChangeActualValue();
+        }
+
+        /// <summary>
+        /// Handle with text boxes
+        /// </summary>
         private void TextBoxHandler(char key)
         {
             if (!core.IsPointLast)
@@ -184,14 +186,16 @@ namespace Task6
                     if (!core.IsOperatorInputted)
                     {
                         this.ResultTextBox.Text = this.InputTextBox.Text;
+                        var inputted = Double.Parse(this.ResultTextBox.Text);
+                        AddToJournal(inputted, true);
                     }
                     else
                     {
                         var result = DoOperation(core.LastOperator);
                         core.IsOperatorInputted = false;
 
-                        string formattedResult = String.Format("{0:F2}", result);
-                        this.ResultTextBox.Text = formattedResult;
+                        AddToJournal(result, false);
+                        FormatAndWriteToResultBox(result);
                     }
                     this.InputTextBox.Clear();
                     core.IsDigitsInputted = false;
@@ -203,10 +207,12 @@ namespace Task6
             }
         }
 
+        /// <summary>
+        /// Calculates equation inputted in text boxes
+        /// </summary>
         private double DoOperation(char key)
         {
-            //double first = core.ResultsBuffer.ElementAt(core.ResultsBuffer.Count - 1);
-            double first = Double.Parse(this.ResultTextBox.Text);
+            double first = core.ResultsBuffer[core.ActualResultsBufferIndex];
             if (core.IsOperatorInputted)
             {
                 this.InputTextBox.Text = this.InputTextBox.Text.Substring(2); 
@@ -215,6 +221,9 @@ namespace Task6
             return CalculatorCore.Operation(key, first, second);
         }
 
+        /// <summary>
+        /// Handle operator input
+        /// </summary>
         private void AddOperator(char key)
         {
             core.LastOperator = key;
@@ -222,11 +231,56 @@ namespace Task6
             core.IsOperatorInputted = true;
         }
 
+        /// <summary>
+        /// Handle digits input
+        /// </summary>
         private void AddDigit(string digit)
         {
             this.InputTextBox.AppendText(digit);
             core.IsDigitsInputted = true;
             core.IsPointLast = false;
+        }
+
+        /// <summary>
+        /// Operate with result journal
+        /// </summary>
+        private void AddToJournal(double data, bool IsOnlyDigit)
+        {
+            string buffer;
+            if (IsOnlyDigit)
+            {
+                buffer = this.ResultTextBox.Text;
+            }
+            else
+            {
+                buffer = String.Concat(this.ResultTextBox.Text, " ", core.LastOperator, " ", this.InputTextBox.Text);
+            }
+            this.resultsJournal.Items.Add(buffer);
+            core.ResultsBuffer.Add(data);
+            ++core.ActualResultsBufferIndex;
+
+            if (this.resultsJournal.Items.Count > 4)
+            {
+                this.resultsJournal.Items.RemoveAt(0);
+                core.ResultsBuffer.RemoveAt(1);
+            }
+            resultsJournal.SelectedIndex = this.resultsJournal.Items.Count - 1;
+        }
+
+        /// <summary>
+        /// Changes actual value according to the selected value in journal
+        /// </summary>
+        private void ChangeActualValue()
+        {
+            core.ActualResultsBufferIndex = resultsJournal.SelectedIndex + 1;
+            var result = core.ResultsBuffer[core.ActualResultsBufferIndex];
+            FormatAndWriteToResultBox(result);
+        }
+
+        private void FormatAndWriteToResultBox(double data)
+        {
+            string formatted = String.Format("{0:F2}", data);
+            this.ResultTextBox.Text = formatted;
         }
     }
 }

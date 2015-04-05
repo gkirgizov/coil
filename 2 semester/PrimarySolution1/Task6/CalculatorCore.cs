@@ -7,12 +7,16 @@ namespace Task6
     {
         public CalculatorCore()
         {
-            ResultsBuffer = new List<double>() {0};
+            ResultsBuffer = new List<double> { 0 };
             IsOperatorInputted = false;
             IsDigitsInputted = false;
             IsPointLast = false;
+            ActualResultsBufferIndex = 0;
         }
 
+        /// <summary>
+        /// Contains calculated results
+        /// </summary>
         public List<double> ResultsBuffer { get; set; }
 
         //public bool IsInputBoxEmpty
@@ -23,14 +27,34 @@ namespace Task6
         //    }
         //}
 
+        /// <summary>
+        /// True - if ',' is last symbol in the input
+        /// </summary>
         public bool IsPointLast { get; set; }
 
+        /// <summary>
+        /// True - if at least one digit was inputted
+        /// </summary>
         public bool IsDigitsInputted { get; set; }
 
+        /// <summary>
+        /// True - if any operator was inputted
+        /// </summary>
         public bool IsOperatorInputted { get; set; }
 
+        /// <summary>
+        /// Contains last inputted operator
+        /// </summary>
         public char LastOperator { get; set; }
 
+        /// <summary>
+        /// Contains actual index pointing to the actual(selected) data in ResultsBuffer
+        /// </summary>
+        public int ActualResultsBufferIndex { get; set; }
+
+        /// <summary>
+        /// Do operation "key" with operands "first" and "second"
+        /// </summary>
         public static double Operation(char key, double first, double second)
         {
             if (key == '+')
@@ -50,11 +74,6 @@ namespace Task6
                 return first / second;
             }
             return default(Double);
-        }
-
-        private class Journal : List<double>
-        {
-            //public override 
         }
     }
 }
