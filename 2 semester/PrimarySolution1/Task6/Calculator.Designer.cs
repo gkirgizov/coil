@@ -57,6 +57,7 @@
             // 
             // InputTextBox
             // 
+            this.InputTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel1.SetColumnSpan(this.InputTextBox, 2);
             this.InputTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.InputTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -114,6 +115,7 @@
             // 
             // ResultTextBox
             // 
+            this.ResultTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel1.SetColumnSpan(this.ResultTextBox, 2);
             this.ResultTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.ResultTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -375,6 +377,7 @@
             // 
             // resultsJournal
             // 
+            this.resultsJournal.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel1.SetColumnSpan(this.resultsJournal, 2);
             this.resultsJournal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resultsJournal.FormattingEnabled = true;
