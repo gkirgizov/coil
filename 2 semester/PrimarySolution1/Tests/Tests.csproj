@@ -61,6 +61,7 @@
     <Compile Include="Task4\UniqueListTest.cs" />
     <Compile Include="Task5\FunctionsTest.cs" />
     <Compile Include="Task5\ConsoleArrowMoverTest.cs" />
+    <Compile Include="Task7\SetTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControlWork1\ControlWork1.csproj">
@@ -78,6 +79,10 @@
     <ProjectReference Include="..\Task5\Task5.csproj">
       <Project>{eb3cc4e6-0f60-43bf-b269-7fb4cc3a325a}</Project>
       <Name>Task5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Task7\Task7.csproj">
+      <Project>{85266217-9658-4f46-9435-24ebb77af7c5}</Project>
+      <Name>Task7</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

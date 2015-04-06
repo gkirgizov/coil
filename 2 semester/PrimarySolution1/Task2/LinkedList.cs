@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Task2
 {
@@ -6,13 +7,13 @@ namespace Task2
     /// List based on links
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class LinkedList<T> : IList<T>
+    public class LinkedList<T> : Task2.IList<T>, IEnumerable<T>
     {
-        private class LinkedListElement<T>
+        private class LinkedListElement
         {
             private T data;
-            private LinkedListElement<T> next;
-            private LinkedListElement<T> prev;
+            private LinkedListElement next;
+            private LinkedListElement prev;
 
             public LinkedListElement()
             { }
@@ -22,13 +23,13 @@ namespace Task2
                 this.data = newData;
             }
 
-            public LinkedListElement<T> Next
+            public LinkedListElement Next
             {
                 set { next = value; }
                 get { return next; }
             }
 
-            public LinkedListElement<T> Prev
+            public LinkedListElement Prev
             {
                 set { prev = value; }
                 get { return prev; }
@@ -41,26 +42,25 @@ namespace Task2
             }
         }
 
-        private LinkedListElement<T> head;
-        private LinkedListElement<T> tail;
-        private int size;
+        private LinkedListElement head;
+        private LinkedListElement tail;
 
         public LinkedList()
         {
-            this.size = 0;
+            this.Size = 0;
         }
 
         public LinkedList(T newData)
         {
-            this.tail = new LinkedListElement<T>(newData);
+            this.tail = new LinkedListElement(newData);
             this.head = this.tail;
-            this.size = 1;
+            this.Size = 1;
         }
 
         /// <summary>
         /// Returns number of items in list
         /// </summary>
-        public int Size { get { return this.size; } }
+        public int Size { get; private set; }
 
         /// <summary>
         /// Add new element in list to spot with index.
@@ -68,11 +68,11 @@ namespace Task2
         /// </summary>
         public virtual void Add(T addedData, int index = -1)
         {
-            ++this.size;
-            LinkedListElement<T> newElement = new LinkedListElement<T>(addedData);
+            ++this.Size;
+            LinkedListElement newElement = new LinkedListElement(addedData);
             if (this.head != null)
             {
-                LinkedListElement<T> ptr = this.head;
+                LinkedListElement ptr = this.head;
                 if (index < 0)
                 {
                     ptr = this.tail;
@@ -116,7 +116,7 @@ namespace Task2
         {
             if (this.head != null)
             {
-                LinkedListElement<T> ptr = this.head;
+                LinkedListElement ptr = this.head;
                 for (; ptr != this.tail && index > 0; --index)
                 {
                     ptr = ptr.Next;
@@ -137,7 +137,7 @@ namespace Task2
         {
             if (this.head != null)
             {
-                LinkedListElement<T> ptr = this.head;
+                LinkedListElement ptr = this.head;
                 while (ptr != null)
                 {
                     if (ptr.Data.Equals(searchedData))
@@ -155,7 +155,7 @@ namespace Task2
         /// </summary>
         public void Delete(T deletedData)
         {
-            LinkedListElement<T> ptr = this.head;
+            LinkedListElement ptr = this.head;
             bool isDeletionSuccesful = false;
             while (ptr != null)
             {
@@ -183,7 +183,7 @@ namespace Task2
                         ptr.Prev.Next = ptr.Next;
                     }
                     ptr = null;
-                    --this.size;
+                    --this.Size;
                     return;
                 }
                 ptr = ptr.Next;
@@ -192,6 +192,21 @@ namespace Task2
             {
                 throw new DeleteNonexistentItemException();
             }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            LinkedListElement current = head;
+            while (current != null)
+            {
+                yield return current.Data;
+                current = current.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

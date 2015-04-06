@@ -37,6 +37,7 @@ namespace Tests.Task2
             Assert.AreEqual(tList.Get(last), 3);
             Assert.AreEqual(tList.Get(last - 1), 2);
         }
+        
         [TestMethod]
         public void GetNullTest()
         {
@@ -65,6 +66,18 @@ namespace Tests.Task2
             Assert.AreEqual(tList.Get(1), default(int));
             tList.Delete(2);
             Assert.AreEqual(tList.Get(0), 1);
+        }
+
+        [TestMethod]
+        public void IEnumerableTest()
+        {
+            tList = new LinkedList<int> { 0, 1, 2, 3, 4 };
+            int expectedValue = 0;
+            foreach (var item in tList)
+            {
+                Assert.AreEqual(expectedValue, item);
+                ++expectedValue;
+            }
         }
     }
 }
