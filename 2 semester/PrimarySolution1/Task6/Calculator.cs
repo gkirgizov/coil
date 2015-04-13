@@ -53,106 +53,39 @@ namespace Task6
             }
         }
 
-        private void ButtonCancelLastClick(object sender, EventArgs e)
-        {
-            this.InputTextBox.Clear();
-            core.IsPointLast = false;
-            core.IsDigitsInputted = false;
-            core.IsOperatorInputted = false;
-        }
-
         private void ButtonCancelClick(object sender, EventArgs e)
         {
             this.InputTextBox.Clear();
             core.IsPointLast = false;
             core.IsDigitsInputted = false;
             core.IsOperatorInputted = false;
-            core.ActualResultsBufferIndex = 0;
-            this.ResultTextBox.Text = "0";
-        }
-        
-        #region Digits' butttons
-        private void ButtonDigit7Click(object sender, EventArgs e)
-        {
-            AddDigit("7");
+            if ((Button)sender == this.buttonCancel)
+            {
+                core.ActualResultsBufferIndex = 0;
+                this.ResultTextBox.Text = "0";
+            }
         }
 
-        private void ButtonDigit8Click(object sender, EventArgs e)
+        private void ButtonDigitClick(object sender, EventArgs e)
         {
-            AddDigit("8");
+            Button digit = sender as Button;
+            AddDigit(digit.Text);
         }
-
-        private void ButtonDigit9Click(object sender, EventArgs e)
-        {
-            AddDigit("9");
-        }
-
-        private void ButtonDigit4Click(object sender, EventArgs e)
-        {
-            AddDigit("4");
-        }
-
-        private void ButtonDigit5Click(object sender, EventArgs e)
-        {
-            AddDigit("5");
-        }
-
-        private void ButtonDigit6Click(object sender, EventArgs e)
-        {
-            AddDigit("6");
-        }
-
-        private void ButtonDigit1Click(object sender, EventArgs e)
-        {
-            AddDigit("1");
-        }
-
-        private void ButtonDigit2Click(object sender, EventArgs e)
-        {
-            AddDigit("2");
-        }
-
-        private void ButtonDigit3Click(object sender, EventArgs e)
-        {
-            AddDigit("3");
-        }
-
-        private void ButtonDigit0Click(object sender, EventArgs e)
-        {
-            AddDigit("0");
-        }
-        #endregion
 
         private void ButtonPointClick(object sender, EventArgs e)
         {
-            if (core.IsDigitsInputted && !core.IsPointLast) 
+            if (core.IsDigitsInputted && !core.IsPointLast)
             {
                 this.InputTextBox.AppendText(",");
                 core.IsPointLast = true;
             }
         }
 
-        #region Operations buttons
-        private void ButtonOperationDivisionClick(object sender, EventArgs e)
+        private void ButtonOperationClick(object sender, EventArgs e)
         {
-            TextBoxHandler('/');
+            Button operation = sender as Button;
+            TextBoxHandler(operation.Text[0]);
         }
-
-        private void ButtonOperationMultiplicationClick(object sender, EventArgs e)
-        {
-            TextBoxHandler('*');
-        }
-
-        private void ButtonOperationSubtractionClick(object sender, EventArgs e)
-        {
-            TextBoxHandler('-');
-        }
-
-        private void ButtonOperationSumClick(object sender, EventArgs e)
-        {
-            TextBoxHandler('+');
-        }
-        #endregion
 
         private void ButtonCalculateClick(object sender, EventArgs e)
         {
@@ -173,6 +106,7 @@ namespace Task6
         {
             ChangeActualValue();
         }
+
 
         /// <summary>
         /// Handle with text boxes
@@ -215,7 +149,7 @@ namespace Task6
             double first = core.ResultsBuffer[core.ActualResultsBufferIndex];
             if (core.IsOperatorInputted)
             {
-                this.InputTextBox.Text = this.InputTextBox.Text.Substring(2); 
+                this.InputTextBox.Text = this.InputTextBox.Text.Substring(2);
             }
             double second = Double.Parse(this.InputTextBox.Text);
             return CalculatorCore.Operation(key, first, second);

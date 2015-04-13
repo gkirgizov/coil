@@ -19,14 +19,6 @@ namespace Task6
         /// </summary>
         public List<double> ResultsBuffer { get; set; }
 
-        //public bool IsInputBoxEmpty
-        //{
-        //    get
-        //    {
-        //        return !this.IsOperatorInputted && !this.IsDigitsInputted;
-        //    }
-        //}
-
         /// <summary>
         /// True - if ',' is last symbol in the input
         /// </summary>

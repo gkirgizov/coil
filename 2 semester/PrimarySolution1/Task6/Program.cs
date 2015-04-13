@@ -13,7 +13,7 @@ namespace Task6
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Clock());
+            Application.Run(new Calculator());
         }
     }
 }
