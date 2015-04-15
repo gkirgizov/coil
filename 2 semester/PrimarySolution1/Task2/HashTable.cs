@@ -9,40 +9,44 @@ namespace Task2
     /// <typeparam name="T"></typeparam>
     public class HashTable<T>
     {
-        private List<IList<T>> table;
-
-        /// <summary>
-        /// Hash function without hash table size correction
-        /// </summary>
-        public Func<T, int> HashFunction { get; set; }
-
-        public HashTable(int startCapacity)
+        public HashTable(int startCapacity, Func<T, int> hashFunc)
         {
             this.table = new List<IList<T>>((int)startCapacity);
             for (; startCapacity > 0; --startCapacity)
             {
                 this.table.Add(null);
             }
-            this.HashFunction = HashFunctionDefault;
-        }
-
-        public HashTable(int startCapacity, Func<T, int> hashFunc)
-            : this(startCapacity)
-        {
-            this.HashFunction = hashFunc;
+            this.hashfunction = hashFunc;
         }
 
         /// <summary>
-        /// Return hash code of the data according to hash table size
+        /// Hash function without hash table size correction
         /// </summary>
-        public int Hash(T hashedData)
+        public Func<T, int> HashFunction
         {
-            return HashFunction(hashedData) % table.Capacity;
-        }
+            get { return hashfunction; }
 
-        private int HashFunctionDefault(T hashedData)
-        {
-            return Math.Abs(hashedData.GetHashCode());
+            set
+            {
+                var tempList = new LinkedList<T>();
+                foreach (var innerList in this.table)
+                {
+                    if (innerList != null)
+                    {
+                        foreach (var item in innerList)
+                        {
+                            tempList.Add(item);
+                        }
+                        innerList.Clear();
+                    }
+                }
+
+                this.hashfunction = value;
+                foreach (var item in tempList)
+                {
+                    this.Add(item);
+                }
+            }
         }
 
         /// <summary>
@@ -78,5 +82,17 @@ namespace Task2
             int hash = Hash(searchedData);
             return this.table[hash].Search(searchedData);
         }
+
+        /// <summary>
+        /// Return hash code of the data according to hash table size
+        /// </summary>
+        private int Hash(T hashedData)
+        {
+            return HashFunction(hashedData) % table.Capacity;
+        }
+
+        private Func<T, int> hashfunction;
+
+        private List<IList<T>> table;
     }
 }

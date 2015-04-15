@@ -15,29 +15,26 @@ namespace Tests.Task2
         [TestInitialize]
         public void Initialize()
         {
-            htable = new HashTable<string>(10);
+            htable = new HashTable<string>(10, HashFunctions.UniversalHashFunction);
         }
 
         [TestMethod]
-        public void HashFunctionCollisionTest()
+        public void HashFunctionsChangelingTest()
         {
-            var s1 = "a";
-            var s2 = "b";
-            Assert.AreNotEqual(htable.Hash(s1), htable.Hash(s2));
+            htable.HashFunction = HashFunctions.StringHashFunction1;
+            Assert.AreEqual(htable.HashFunction, HashFunctions.StringHashFunction1);
         }
 
         [TestMethod]
-        public void HashFunctionChangelingTest()
+        public void HashFunctionsChangelingDataValidTest()
         {
-            Func<string, int> newHashFunction = HashFunctions.StringHashFunction1;
-            if (!htable.HashFunction.Equals(newHashFunction))
-            {
-                var testData = "1";
-                int hash1 = htable.Hash(testData);
-                htable.HashFunction = newHashFunction;
-                int hash2 = htable.Hash(testData);
-                Assert.AreNotEqual(hash1, hash2);
-            }
+            htable.Add("0");
+            htable.Add("1");
+            htable.Add("3");
+            htable.HashFunction = HashFunctions.StringHashFunction1;
+            Assert.IsTrue(htable.Search("0"));
+            Assert.IsTrue(htable.Search("1"));
+            Assert.IsTrue(htable.Search("3"));
         }
 
         [TestMethod]
