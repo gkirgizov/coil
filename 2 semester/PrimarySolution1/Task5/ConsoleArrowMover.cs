@@ -34,9 +34,10 @@ namespace Task5
         /// </summary>
         public void MoveRight(object sender, EventArgs args)
         {
-            ++Console.CursorLeft;
-            Console.Write('_');
-            --Console.CursorLeft;
+            if (Console.CursorLeft < Console.BufferWidth - 1)
+            {
+                Console.Write('_');
+            }
         }
 
         /// <summary>
@@ -46,8 +47,6 @@ namespace Task5
         {
             if (Console.CursorTop > 0)
             {
-                Console.Write('|');
-                --Console.CursorLeft;
                 --Console.CursorTop;
             }
         }
@@ -57,9 +56,8 @@ namespace Task5
         /// </summary>
         public void MoveDown(object sender, EventArgs args)
         {
-            Console.SetCursorPosition(Console.CursorLeft, ++Console.CursorTop);
-            Console.Write('|');
-            --Console.CursorLeft; 
+            //Console.SetCursorPosition(Console.CursorLeft, ++Console.CursorTop);
+            ++Console.CursorTop;
         }
     }
 }
