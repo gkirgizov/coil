@@ -33,8 +33,8 @@
             this.minutesBox = new System.Windows.Forms.TextBox();
             this.hoursBox = new System.Windows.Forms.TextBox();
             this.secondsBox = new System.Windows.Forms.TextBox();
-            this.radioButtonLocal = new System.Windows.Forms.RadioButton();
             this.radioButtonUtc = new System.Windows.Forms.RadioButton();
+            this.radioButtonLocal = new System.Windows.Forms.RadioButton();
             this.clockTabs = new System.Windows.Forms.TabControl();
             this.tabPageDigitalClock = new System.Windows.Forms.TabPage();
             this.timer = new System.Windows.Forms.Timer(this.components);
@@ -103,6 +103,19 @@
             this.secondsBox.Text = "ss";
             this.secondsBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // radioButtonUtc
+            // 
+            this.radioButtonUtc.AutoSize = true;
+            this.radioButtonUtc.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radioButtonUtc.Location = new System.Drawing.Point(92, 86);
+            this.radioButtonUtc.Name = "radioButtonUtc";
+            this.radioButtonUtc.Size = new System.Drawing.Size(84, 20);
+            this.radioButtonUtc.TabIndex = 5;
+            this.radioButtonUtc.TabStop = true;
+            this.radioButtonUtc.Text = "Utc";
+            this.radioButtonUtc.UseVisualStyleBackColor = true;
+            this.radioButtonUtc.CheckedChanged += new System.EventHandler(this.RadioButtonUtcCheckedChanged);
+            // 
             // radioButtonLocal
             // 
             this.radioButtonLocal.AutoSize = true;
@@ -116,19 +129,6 @@
             this.radioButtonLocal.Text = "Local";
             this.radioButtonLocal.UseVisualStyleBackColor = true;
             this.radioButtonLocal.CheckedChanged += new System.EventHandler(this.RadioButtonLocalCheckedChanged);
-            // 
-            // radioButtonUtc
-            // 
-            this.radioButtonUtc.AutoSize = true;
-            this.radioButtonUtc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioButtonUtc.Location = new System.Drawing.Point(92, 86);
-            this.radioButtonUtc.Name = "radioButtonUtc";
-            this.radioButtonUtc.Size = new System.Drawing.Size(84, 20);
-            this.radioButtonUtc.TabIndex = 5;
-            this.radioButtonUtc.TabStop = true;
-            this.radioButtonUtc.Text = "Utc";
-            this.radioButtonUtc.UseVisualStyleBackColor = true;
-            this.radioButtonUtc.CheckedChanged += new System.EventHandler(this.RadioButtonUtcCheckedChanged);
             // 
             // clockTabs
             // 

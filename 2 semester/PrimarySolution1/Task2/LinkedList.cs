@@ -194,6 +194,13 @@ namespace Task2
             }
         }
 
+        public void Clear()
+        {
+            this.head = null;
+            this.tail = null;
+            this.Size = 0;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             LinkedListElement current = head;

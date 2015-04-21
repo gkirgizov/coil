@@ -8,53 +8,38 @@ namespace Task6
         public Clock()
         {
             InitializeComponent();
+            isUtc = false;
             UpdateTime(DateTime.Now);
         }
 
-        private int hours;
-
-        private int Hours
-        {
-            get { return hours; }
-            set { hours = value % 24; }
-        }
+        private int Hours { get; set; }
         private int Minutes { get; set; }
         private int Seconds { get; set; }
+
+        private bool isUtc;
 
         private DateTime clockCore;
 
         private void TimerTick(object sender, EventArgs e)
         {
-            if (Seconds >= 59)
+            if (isUtc)
             {
-                Seconds = 0;
-                if (Minutes >= 59)
-                {
-                    Minutes = 0;
-                    ++Hours;
-                    this.hoursBox.Text = Hours.ToString();
-                }
-                else
-                {
-                    ++Minutes;
-                }
-                this.minutesBox.Text = String.Format("{0:d2}", Minutes);
+                UpdateTime(DateTime.UtcNow);
             }
             else
             {
-                ++this.Seconds;
+                UpdateTime(DateTime.Now);
             }
-            this.secondsBox.Text = String.Format("{0:d2}", Seconds);
         }
 
         private void RadioButtonUtcCheckedChanged(object sender, EventArgs e)
         {
-            UpdateTime(DateTime.UtcNow);
+            this.isUtc = true;
         }
 
         private void RadioButtonLocalCheckedChanged(object sender, EventArgs e)
         {
-            UpdateTime(DateTime.Now);
+            this.isUtc = false;
         }
 
         private void UpdateTime(DateTime datetime)

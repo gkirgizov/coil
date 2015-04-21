@@ -19,5 +19,13 @@ namespace Task2
             }
             return hash;
         }
+
+        /// <summary>
+        /// Return positive hash of any data of any type
+        /// </summary>
+        public static int UniversalHashFunction<T>(T hashedData)
+        {
+            return Math.Abs(hashedData.GetHashCode());
+        }
     }
 }
