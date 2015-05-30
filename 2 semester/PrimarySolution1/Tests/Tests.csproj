@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,6 +51,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ControlWork1\QueuePriorityIntTest.cs" />
+    <Compile Include="ControlWork2\BinaryTreeIteratorTest.cs" />
     <Compile Include="Task4\OperatorTest.cs" />
     <Compile Include="Task3\HashTableTest.cs" />
     <Compile Include="Task3\LinkedListTest.cs" />
@@ -59,8 +62,17 @@
     <Compile Include="Task4\UniqueListTest.cs" />
     <Compile Include="Task5\FunctionsTest.cs" />
     <Compile Include="Task5\ConsoleArrowMoverTest.cs" />
+    <Compile Include="Task7\SetTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ControlWork1\ControlWork1.csproj">
+      <Project>{bd3fcb79-324b-461f-b1c8-34a056be64ee}</Project>
+      <Name>ControlWork1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ControlWork2\ControlWork2.csproj">
+      <Project>{72b51db9-7d51-4f60-9bda-589cb894d5de}</Project>
+      <Name>ControlWork2</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Task2\Task2.csproj">
       <Project>{b7d2116c-94e0-42dd-804b-02306f263ca3}</Project>
       <Name>Task2</Name>
@@ -73,9 +85,10 @@
       <Project>{eb3cc4e6-0f60-43bf-b269-7fb4cc3a325a}</Project>
       <Name>Task5</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <ProjectReference Include="..\Task7\Task7.csproj">
+      <Project>{85266217-9658-4f46-9435-24ebb77af7c5}</Project>
+      <Name>Task7</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

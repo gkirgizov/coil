@@ -1,17 +1,16 @@
-﻿using System;
-
+﻿
 namespace Task2
 {
     /// <summary>
     /// Stack based on links
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class LinkedStack<T> : IStack<T>
+    class LinkedStack<T> : Task2.IStack<T>
     {
-        private class LinkedStackElement<T>
+        private class LinkedStackElement
         {
             private T data;
-            private LinkedStackElement<T> prev;
+            private LinkedStackElement prev;
 
             public LinkedStackElement()
             { }
@@ -27,41 +26,40 @@ namespace Task2
                 get { return data; }
             }
 
-            public LinkedStackElement<T> Prev
+            public LinkedStackElement Prev
             {
                 set { prev = value; }
                 get { return prev; }
             }
         }
 
-        private int size;        
-        private LinkedStackElement<T> head;
+        private LinkedStackElement head;
 
         public LinkedStack()
         {
-            this.size = 0;
+            this.Size = 0;
         }
 
         public LinkedStack(T newData)
         {
-            this.head = new LinkedStackElement<T>(newData);
-            this.size = 1;
+            this.head = new LinkedStackElement(newData);
+            this.Size = 1;
         }
 
         /// <summary>
         /// Return number of items in stack
         /// </summary>
-        public int Size { get { return this.size; } }
+        public int Size { get; private set; }
 
         /// <summary>
         /// Add item to stack
         /// </summary>
         public void Push(T newData)
         {
-            LinkedStackElement<T> newElement = new LinkedStackElement<T>(newData);
+            LinkedStackElement newElement = new LinkedStackElement(newData);
             newElement.Prev = this.head;
             this.head = newElement;
-            ++this.size;
+            ++this.Size;
         }
 
         /// <summary>
@@ -73,7 +71,7 @@ namespace Task2
             {
                 T returned = this.head.Data;
                 this.head = this.head.Prev;
-                --this.size;
+                --this.Size;
                 return returned;
             }
             //exception
