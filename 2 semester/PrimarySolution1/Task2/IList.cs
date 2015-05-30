@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Task2
 {
@@ -6,15 +7,12 @@ namespace Task2
     /// Interface for list
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    interface IList<T>
+    interface IList<T> : IEnumerable<T>
     {
         /// <summary>
         /// Return number of items in list
         /// </summary>
-        int Size
-        {
-            get;
-        }
+        int Size { get; }
 
         /// <summary>
         /// Add new element in list to spot with index.
@@ -36,5 +34,10 @@ namespace Task2
         /// Delete item by value
         /// </summary>
         void Delete(T deletedData);
+
+        /// <summary>
+        /// Delete all items
+        /// </summary>
+        void Clear();
     }
 }
