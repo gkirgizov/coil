@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace hw2 {
+    class InfectedState : ComputerState {
+
+        public override IMessage SendMessage() {
+            return new ViralMessage();
+        }
+
+        //public override ComputerState HandleMessages(Queue<Message> messages, Computer.OpSystem os, ProbabilityLogic probLogic) {
+        //}
+
+        public override void Draw(string info) {
+            var oldForegroundColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(info + " - Infected");
+            Console.ForegroundColor = oldForegroundColor;
+        }
+
+        public override double GetStability(Computer.OpSystem os) {
+            return ((double)os + (double)stability) / 100;
+        }
+
+        private int stability = 0;
+    }
+}
