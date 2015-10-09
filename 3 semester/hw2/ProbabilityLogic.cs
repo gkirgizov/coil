@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace hw2 {
-    class ProbabilityLogic {
+    public class ProbabilityLogic {
         public ProbabilityLogic(int seed = 0) {
             Randomizer = seed == 0 ? new Random() : new Random(seed);
         }

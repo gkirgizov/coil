@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace hw2 {
-    class Computer {
+    public class Computer {
         public Computer(OpSystem os) {
             OS = os;
             messages = new Queue<IMessage>();

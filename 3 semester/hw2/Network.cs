@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 
 namespace hw2 {
-    class Network {
+    public class Network {
         public Network() {
             network = new Graph<Computer>();
             probLogic = new ProbabilityLogic();
         }
-
         public Network(ICollection<Computer> computers, List<List<int>> links) : this() {
             network = new Graph<Computer>(computers, links);
         }
@@ -60,7 +59,7 @@ namespace hw2 {
         public void Run() {
             string control = "n";
             OutputNetwork();
-            while (!IsWholeNetworkInfected()) {
+            while (!IsNetworkStable()) {
                 Console.WriteLine();
                 ExecuteStep();
                 Console.WriteLine("Continue? (y/n)");
@@ -77,39 +76,50 @@ namespace hw2 {
         }
 
         public bool IsWholeNetworkInfected() {
-            foreach (var computer in network.Items) {
-                if (!(computer.State is InfectedState)) {
+            for (var iter = network.GetGraphEnumerator(); iter.MoveNext();) {
+                if (!(iter.Current.State is InfectedState)) {
                     return false;
                 }
             }
-            return network.Items.Count > 0;
+            return network.Count > 0;
+        }
+
+        public bool IsNetworkStable() {
+            for (var iter = network.GetGraphEnumerator(); iter.MoveNext();) {
+                if (iter.Current.State is InfectedState) {
+                    foreach (var neighbor in iter.GetNeighbors()) {
+                        if (!(neighbor.State is InfectedState)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public void OutputNetwork() {
-            for (int i = 0; i < network.Count; ++i) {
-                network.Items[i].OutputInfo(i.ToString());
+            for (var iter = network.GetGraphEnumerator(); iter.MoveNext();) {
+                iter.Current.OutputInfo(iter.CurrentIndex.ToString() + " - " + iter.Current.OS);
                 Console.Write("    Neighbors:");
-                foreach (var link in network.Links[i]) {
-                    Console.Write(" " + link);
+                foreach (var neighbor in iter.GetNeighborsIndexes()) {
+                    Console.Write(" " + neighbor);
                 }
                 Console.WriteLine();
             }
         }
 
         private void SendMessagesStep() {
-            for (int i = 0; i < network.Count; ++i) {
-                var server = network.Items[i];
-                foreach (var client in network.GetNeighbors(i)) {
-                    client.AddMessage(server.SendMessage());
+            for (var serverIter = network.GetGraphEnumerator(); serverIter.MoveNext();) {
+                foreach (var client in serverIter.GetNeighbors()) {
+                    client.AddMessage(serverIter.Current.SendMessage());
                 }
             }
         }
         private void HandleMessagesStep() {
-            foreach (var computer in network.Items) {
-                computer.HandleMessages(probLogic);
+            for (var serverIter = network.GetGraphEnumerator(); serverIter.MoveNext();) {
+                serverIter.Current.HandleMessages(probLogic);
             }
         }
-        
         /// <summary>
         /// Logical modul.
         /// </summary>

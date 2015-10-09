@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace hw2 {
-    class ComputerState {
+    public class ComputerState {
 
         public virtual IMessage SendMessage() {
             return new VoidMessage();

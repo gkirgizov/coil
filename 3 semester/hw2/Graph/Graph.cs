@@ -1,70 +1,71 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace hw2 {
-    class Graph<T> {
+    public class Graph<T> : IGraphEnumerable<T> {
 
         public Graph(int size = 1) {
-            Items = new List<T>(size);
-            Links = new List<List<int>>(size);
+            this.items = new List<T>(size);
+            this.links = new List<List<int>>(size);
             for (int i = 0; i < size; ++i) {
-                Links.Add(new List<int>());
+                this.links.Add(new List<int>());
             }
         }
-
         public Graph(ICollection<T> items) : this(items.Count) {
-            this.Items = new List<T>(items);
+            this.items = new List<T>(items);
         }
-
         public Graph(ICollection<T> items, List<List<int>> links) : this(items) {
             int size = Count < links.Count ? Count : links.Count;
             for (int i = 0; i < size; ++i) {
                 foreach (var link in links[i]) {
-                    Links[i].Add(link);
+                    this.links[i].Add(link);
                 }
             }
         }
 
         public void AddItem(T item) {
-            Links.Add(new List<int>());
-            this.Items.Add(item);
+            this.links.Add(new List<int>());
+            this.items.Add(item);
         }
 
         public void AddEdge(int from, int to) {
             if (from != to) {
-                if (!Links[from].Contains(to)) {
-                    Links[from].Add(to);
+                if (!this.links[from].Contains(to)) {
+                    this.links[from].Add(to);
                 }
-                if (!Links[to].Contains(from)) {
-                    Links[to].Add(from);
+                if (!this.links[to].Contains(from)) {
+                    this.links[to].Add(from);
                 }
             }
-        }
-
-        public List<T> GetNeighbors(int itemIndex) {
-            var neighbors = new List<T>(Items.Count);
-            foreach (int neighborIndex in Links[itemIndex]) {
-                neighbors.Add(Items[neighborIndex]);
-            }
-            return neighbors;
         }
 
         private void Remove(int itemIndex) {
-            foreach (var linkList in Links) {
+            foreach (var linkList in this.links) {
                 linkList.Remove(itemIndex);
             }
-            Links.RemoveAt(itemIndex);
-            this.Items.RemoveAt(itemIndex);
+            this.links.RemoveAt(itemIndex);
+            this.items.RemoveAt(itemIndex);
+        }
+
+        public IGraphEnumerator<T> GetGraphEnumerator() {
+            return new GraphEnumerator<T>(items, links);
+        }
+        public IEnumerator<T> GetEnumerator() {
+            return new GraphEnumerator<T>(items, links);
+        }
+        IEnumerator IEnumerable.GetEnumerator() {
+            return GetGraphEnumerator();
         }
 
         public int Count {
-            get { return Items.Count; }
+            get { return this.items.Count; }
         }
 
-        public List<T> Items { get; private set; }
-
+        private List<T> items;
         /// <summary>
         /// Adjacency list.
         /// </summary>
-        public List<List<int>> Links { get; private set; }
+        private List<List<int>> links;
     }
 }

@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 
 namespace hw2 {
-    class InfectedState : ComputerState {
+    public class InfectedState : ComputerState {
 
         public override IMessage SendMessage() {
             return new ViralMessage();
         }
-
-        //public override ComputerState HandleMessages(Queue<Message> messages, Computer.OpSystem os, ProbabilityLogic probLogic) {
-        //}
 
         public override void Draw(string info) {
             var oldForegroundColor = Console.ForegroundColor;
