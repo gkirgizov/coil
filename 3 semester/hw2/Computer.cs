@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace hw2 {
     public class Computer {
@@ -29,20 +28,27 @@ namespace hw2 {
         }
 
         /// <summary>
-        /// Receives messages from other computers.
+        /// Receives messages from other computer.
         /// </summary>
         /// <param name="msg"></param>
         public void AddMessage(IMessage msg) {
             messages.Enqueue(msg);
         }
 
+        /// <summary>
+        /// Delegates this function to the state.
+        /// </summary>
+        /// <param name="info"></param>
         public void OutputInfo(string info) {
             State.Draw(info);
         }
 
         public ComputerState State { get; private set; }
 
-        public enum OpSystem { Linux = 50, MacOS = 40, Windows = 10 }
+        /// <summary>
+        /// Available Operating Systems.
+        /// </summary>
+        public enum OpSystem { Linux = 50, MacOS = 40, Windows = 10, OS_1337 = 100, YourOS = 0 }
         public OpSystem OS {
             get {
                 return os;

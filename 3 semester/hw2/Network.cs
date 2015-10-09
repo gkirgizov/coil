@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 namespace hw2 {
     public class Network {
-        public Network() {
+        public Network(ProbabilityLogic logic = null) {
             network = new Graph<Computer>();
-            probLogic = new ProbabilityLogic();
+            probLogic = logic == null ? new ProbabilityLogic() : logic;
         }
-        public Network(ICollection<Computer> computers, List<List<int>> links) : this() {
+        public Network(ICollection<Computer> computers, 
+            List<List<int>> links,
+            ProbabilityLogic logic = null) : this() {
             network = new Graph<Computer>(computers, links);
         }
 
@@ -56,6 +58,9 @@ namespace hw2 {
             }
         }
 
+        /// <summary>
+        /// Start network.
+        /// </summary>
         public void Run() {
             string control = "n";
             OutputNetwork();
@@ -69,6 +74,9 @@ namespace hw2 {
             }
         }
 
+        /// <summary>
+        /// Executes one step of sending and handling messages between computers.
+        /// </summary>
         public void ExecuteStep() {
             SendMessagesStep();
             HandleMessagesStep();
@@ -97,6 +105,9 @@ namespace hw2 {
             return true;
         }
 
+        /// <summary>
+        /// Outputs network state
+        /// </summary>
         public void OutputNetwork() {
             for (var iter = network.GetGraphEnumerator(); iter.MoveNext();) {
                 iter.Current.OutputInfo(iter.CurrentIndex.ToString() + " - " + iter.Current.OS);

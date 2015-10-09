@@ -1,14 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace hw2 {
     public class ComputerState {
-
+        /// <summary>
+        /// Send message. Message content depends on the state
+        /// </summary>
+        /// <returns></returns>
         public virtual IMessage SendMessage() {
             return new VoidMessage();
         }
     
+        /// <summary>
+        /// Handle received messages.
+        /// </summary>
+        /// <param name="messages"></param>
+        /// <param name="os"></param>
+        /// <param name="probLogic"></param>
+        /// <returns></returns>
         public virtual ComputerState HandleMessages(Queue<IMessage> messages, Computer.OpSystem os, ProbabilityLogic probLogic) {
             
             // Логика обработки одного сообщения.
@@ -45,6 +54,9 @@ namespace hw2 {
             return ((double)os + (double)stability) / 100;
         }
 
+        /// <summary>
+        /// One of the possible characteristics of the state.
+        /// </summary>
         private int stability = 0;
     }
 }

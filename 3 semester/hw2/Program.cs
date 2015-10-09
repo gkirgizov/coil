@@ -5,7 +5,7 @@ namespace hw2 {
     static class Program {
         static void Main() {
             var net = new Network();
-            net.RandomInit(10);
+            net.RandomInit(100);
             net.Run();
         }
     }

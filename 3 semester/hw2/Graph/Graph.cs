@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace hw2 {
     public class Graph<T> : IGraphEnumerable<T> {
-
         public Graph(int size = 1) {
             this.items = new List<T>(size);
             this.links = new List<List<int>>(size);
