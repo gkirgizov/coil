@@ -47,8 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionHistory.cs" />
-    <Compile Include="AddAction.cs" />
-    <Compile Include="AddLineTool.cs" />
+    <Compile Include="IAction\AddAction.cs" />
+    <Compile Include="ClickTool\AddLineTool.cs" />
     <Compile Include="GlyphLogic.cs" />
     <Compile Include="Editor.cs">
       <SubType>Form</SubType>
@@ -56,17 +56,18 @@
     <Compile Include="Editor.Designer.cs">
       <DependentUpon>Editor.cs</DependentUpon>
     </Compile>
-    <Compile Include="IAction.cs" />
-    <Compile Include="ClickTool.cs" />
-    <Compile Include="IGlyph.cs" />
+    <Compile Include="IAction\IAction.cs" />
+    <Compile Include="ClickTool\ClickTool.cs" />
+    <Compile Include="IGlyph\IGlyph.cs" />
     <Compile Include="IGlyphLogic.cs" />
-    <Compile Include="Line.cs" />
-    <Compile Include="MoveTool.cs" />
+    <Compile Include="IGlyph\Line.cs" />
+    <Compile Include="IAction\MoveAction.cs" />
+    <Compile Include="ClickTool\MoveTool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemoveAction.cs" />
-    <Compile Include="RemoveTool.cs" />
-    <Compile Include="VoidAction.cs" />
+    <Compile Include="IAction\RemoveAction.cs" />
+    <Compile Include="ClickTool\RemoveTool.cs" />
+    <Compile Include="IAction\VoidAction.cs" />
     <EmbeddedResource Include="Editor.resx">
       <DependentUpon>Editor.cs</DependentUpon>
     </EmbeddedResource>
@@ -79,7 +80,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +93,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

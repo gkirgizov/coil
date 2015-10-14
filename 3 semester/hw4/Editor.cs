@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -14,6 +13,7 @@ namespace hw4 {
             InitializeComponent();
 
             core = new GlyphLogic(canvas);
+            g = canvas.CreateGraphics();
             history = new ActionHistory();
 
             /// По полученной информации создает кнопки выбора режима (или: tools)
@@ -28,53 +28,57 @@ namespace hw4 {
                 this.undoButton.Name = tool.Info + "Button";
                 this.undoButton.Size = new System.Drawing.Size(40, 22);
 
-                /// Т.о. кнопки меню меняют текущий режим курсора.
                 newMenuTool.Click += new EventHandler(tool.ChangeTool);
 
                 toolButtons[i] = newMenuTool;
                 ++i;
 
-                //почему-то не видит последний элемент меню
                 tools.Items.Add(newMenuTool);
             }
-            //this.toolsPanel.SuspendLayout();
             this.tools.SuspendLayout();
             this.SuspendLayout();
-
         }
 
-
         private void canvas_MouseDown(object sender, MouseEventArgs e) {
-            var action = core.MouseDown(e.Location);
+            var action = core.MouseDown(e);
             if (action is VoidAction) {
             } else {
                 history.Log(action);
             }
-            core.Draw();
+            core.Draw(g);
             this.Update();
         }
         private void canvas_MouseUp(object sender, MouseEventArgs e) {
-            var action = core.MouseUp(e.Location);
+            var action = core.MouseUp(e);
             if (action is VoidAction) {
             } else {
                 history.Log(action);
             }
-            core.Draw();
+            core.Draw(g);
             this.Update();
         }
 
         private void undoButton_Click(object sender, EventArgs e) {
             history.Undo().Unexecute();
+            core.Draw(g);
+            this.Update();
         }
         private void redoButton_Click(object sender, EventArgs e) {
             history.Redo().Execute();
+            core.Draw(g);
+            this.Update();
         }
 
+
         private IGlyphLogic core;
-        private List<ClickTool> availableTools;
-        private ToolStripButton[] toolButtons;
+        private Graphics g;
         private ActionHistory history;
 
+        private List<ClickTool> availableTools;
+        private ToolStripButton[] toolButtons;
 
+        private void canvas_Resize(object sender, EventArgs e) {
+            g = canvas.CreateGraphics();
+        }
     }
 }

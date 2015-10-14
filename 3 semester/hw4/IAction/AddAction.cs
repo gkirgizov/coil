@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace hw4 {
-    class AddAction : IAction {
+    public class AddAction : IAction {
         public AddAction(GlyphLogic parent, IGlyph glyph) {
             this.parent = parent;
             this.glyph = glyph;
