@@ -1,6 +1,6 @@
 ﻿namespace hw2 {
     public class VoidMessage : IMessage {
-        public ComputerState Execute(ComputerState server) {
+        public ComputerState GetMessage(ComputerState server) {
             return server;
         }
     }

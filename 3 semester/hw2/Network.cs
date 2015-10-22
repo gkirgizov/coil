@@ -5,11 +5,12 @@ namespace hw2 {
     public class Network {
         public Network(ProbabilityLogic logic = null) {
             network = new Graph<Computer>();
-            probLogic = logic == null ? new ProbabilityLogic() : logic;
+            probLogic = logic ?? new ProbabilityLogic();
         }
-        public Network(ICollection<Computer> computers, 
+        public Network(ICollection<Computer> computers,
             List<List<int>> links,
             ProbabilityLogic logic = null) : this() {
+
             network = new Graph<Computer>(computers, links);
         }
 
@@ -34,10 +35,10 @@ namespace hw2 {
                         newOS = Computer.OpSystem.Linux;
                         break;
                 }
-                
+
                 // Random initial state for computer.
                 ComputerState newState;
-                switch (probLogic.Randomizer.Next(0,3)) {
+                switch (probLogic.Randomizer.Next(0, 3)) {
                     case 0:
                         newState = new InfectedState();
                         break;
@@ -49,12 +50,12 @@ namespace hw2 {
             }
 
             network = new Graph<Computer>(newComputers);
-            
+
             // Create random links between computers.
             for (int j = 0; j < numComputers; ++j) {
-               for (int i = 0; i < probLogic.Randomizer.Next(1, numComputers - 1); ++i) {
+                for (int i = 0; i < probLogic.Randomizer.Next(1, numComputers - 1); ++i) {
                     network.AddEdge(j, probLogic.Randomizer.Next(numComputers));
-               } 
+                }
             }
         }
 
@@ -106,7 +107,7 @@ namespace hw2 {
         }
 
         /// <summary>
-        /// Outputs network state
+        /// Outputs network state.
         /// </summary>
         public void OutputNetwork() {
             for (var iter = network.GetGraphEnumerator(); iter.MoveNext();) {
@@ -131,6 +132,7 @@ namespace hw2 {
                 serverIter.Current.HandleMessages(probLogic);
             }
         }
+
         /// <summary>
         /// Logical modul.
         /// </summary>

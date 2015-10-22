@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 namespace hw2 {
+    /// <summary>
+    /// Represents default state of the computer.
+    /// </summary>
     public class ComputerState {
         /// <summary>
         /// Send message. Message content depends on the state
@@ -26,7 +29,7 @@ namespace hw2 {
             while (messages.Count > 0) {
                 var nextMsg = messages.Dequeue();
                 if (!(nextMsg is VoidMessage) && probLogic.IsStateChanges(GetStability(os))) {
-                    probableStates.Add(nextMsg.Execute(this));
+                    probableStates.Add(nextMsg.GetMessage(this));
                 }
             }
 
@@ -43,7 +46,7 @@ namespace hw2 {
         /// Output computer state to the console.
         /// </summary>
         /// <param name="parent"></param>
-        public virtual void Draw(string info) {
+        public virtual void OutputInfo(string info) {
             Console.WriteLine(info + " - Clear");
         }
 

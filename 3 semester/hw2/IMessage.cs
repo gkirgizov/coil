@@ -1,5 +1,5 @@
 ﻿namespace hw2 {
     public interface IMessage {
-        ComputerState Execute(ComputerState server);
+        ComputerState GetMessage(ComputerState server);
     }
 }

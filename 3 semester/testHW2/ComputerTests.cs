@@ -28,7 +28,7 @@ namespace testHW2 {
 
         [TestMethod]
         public void HandleViralMessageTest() {
-            Assert.IsTrue(serverMsg.Execute(client.State) is InfectedState);
+            Assert.IsTrue(serverMsg.GetMessage(client.State) is InfectedState);
             client.AddMessage(serverMsg);
             client.HandleMessages(logic);
             Assert.IsTrue(client.State is InfectedState);
@@ -36,7 +36,7 @@ namespace testHW2 {
 
         [TestMethod]
         public void HandleVoidMessageTest() {
-            Assert.IsTrue(!(clientMsg.Execute(client.State) is InfectedState));
+            Assert.IsTrue(!(clientMsg.GetMessage(client.State) is InfectedState));
             server.AddMessage(clientMsg);
             server.HandleMessages(logic);
             Assert.IsTrue(server.State is InfectedState);
