@@ -25,11 +25,11 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Editor));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.canvas = new System.Windows.Forms.Panel();
             this.toolsPanel = new System.Windows.Forms.Panel();
+            this.tools = new System.Windows.Forms.ToolStrip();
             this.undoButton = new System.Windows.Forms.ToolStripButton();
             this.redoButton = new System.Windows.Forms.ToolStripButton();
-            this.tools = new System.Windows.Forms.ToolStrip();
-            this.canvas = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolsPanel.SuspendLayout();
             this.tools.SuspendLayout();
@@ -51,6 +51,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(584, 361);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
+            // canvas
+            // 
+            this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvas.Location = new System.Drawing.Point(3, 36);
+            this.canvas.Name = "canvas";
+            this.canvas.Size = new System.Drawing.Size(578, 322);
+            this.canvas.TabIndex = 0;
+            this.canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDown);
+            this.canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseMove);
+            this.canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseUp);
+            // 
             // toolsPanel
             // 
             this.toolsPanel.Controls.Add(this.tools);
@@ -59,6 +71,19 @@
             this.toolsPanel.Name = "toolsPanel";
             this.toolsPanel.Size = new System.Drawing.Size(578, 27);
             this.toolsPanel.TabIndex = 1;
+            // 
+            // tools
+            // 
+            this.tools.Dock = System.Windows.Forms.DockStyle.None;
+            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoButton,
+            this.redoButton});
+            this.tools.Location = new System.Drawing.Point(0, 0);
+            this.tools.Name = "tools";
+            this.tools.Size = new System.Drawing.Size(90, 25);
+            this.tools.Stretch = true;
+            this.tools.TabIndex = 0;
+            this.tools.Text = "tools";
             // 
             // undoButton
             // 
@@ -80,31 +105,6 @@
             this.redoButton.Text = "Redo";
             this.redoButton.Click += new System.EventHandler(this.redoButton_Click);
             // 
-            // tools
-            // 
-            this.tools.Dock = System.Windows.Forms.DockStyle.None;
-            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.undoButton,
-            this.redoButton});
-            this.tools.Location = new System.Drawing.Point(0, 0);
-            this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(90, 25);
-            this.tools.Stretch = true;
-            this.tools.TabIndex = 0;
-            this.tools.Text = "tools";
-            // 
-            // canvas
-            // 
-            this.canvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.canvas.Location = new System.Drawing.Point(3, 36);
-            this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(578, 322);
-            this.canvas.TabIndex = 0;
-            this.canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseDown);
-            this.canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.canvas_MouseUp);
-            this.canvas.Resize += new System.EventHandler(this.canvas_Resize);
-            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,7 +114,7 @@
             this.MaximumSize = new System.Drawing.Size(600, 400);
             this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "Editor";
-            this.Text = "Form1";
+            this.Text = "Line Graphic Editor";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.toolsPanel.ResumeLayout(false);
             this.toolsPanel.PerformLayout();

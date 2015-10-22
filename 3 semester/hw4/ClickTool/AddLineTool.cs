@@ -1,25 +1,42 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace hw4 {
+    /// <summary>
+    /// Allows to create lines.
+    /// </summary>
     public class AddLineTool : ClickTool {
-        public AddLineTool(IGlyphLogic parent) : base(parent) {
+
+        public AddLineTool(IGlyphLogic parent) {
             this.parent = parent;
             this.Info = "New Line";
+            this.isAddingStarted = false;
         }
 
         public override IAction MouseDown(MouseEventArgs e) {
-            startOfLine = e.Location;
-            return new VoidAction();
+            addedLine = new Line(e.Location, e.Location);
+            isAddingStarted = true;
+            addedLine.Selected = Line.LineEnds.end;
+            return parent.AddGlyph(addedLine);
+        }
+
+        public override IAction MouseMove(MouseEventArgs e) {
+            if (isAddingStarted) {
+                addedLine.Move(e.Location);
+                parent.Draw();
+            }
+            return defaultReturning;
         }
 
         public override IAction MouseUp(MouseEventArgs e) {
-            return parent.AddGlyph(new Line(startOfLine, e.Location));
+            addedLine.MouseUp(e);
+            addedLine = null;
+            isAddingStarted = false;
+            return defaultReturning;
         }
 
         public override string Info { get; protected set; }
 
-        private Point startOfLine;
-        private IGlyphLogic parent;
+        private bool isAddingStarted;
+        private Line addedLine;
     }
 }

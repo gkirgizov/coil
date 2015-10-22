@@ -5,6 +5,7 @@ namespace hw4 {
     /// Provides undo/redo capabilities by IAction interface.
     /// </summary>
     public class ActionHistory {
+
         public ActionHistory(int capacity = 100) {
             history = new List<IAction>(capacity);
             current = -1;
@@ -28,6 +29,7 @@ namespace hw4 {
                 return new VoidAction();
             }
         }
+        
         /// <summary>
         /// Returns next action.
         /// </summary>
@@ -61,6 +63,7 @@ namespace hw4 {
                 current -= 10;
             }
         }
+
 
         private List<IAction> history;
         private int current;

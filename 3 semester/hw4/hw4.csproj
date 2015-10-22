@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionHistory.cs" />
+    <Compile Include="ClickTool\VoidTool.cs" />
     <Compile Include="IAction\AddAction.cs" />
     <Compile Include="ClickTool\AddLineTool.cs" />
     <Compile Include="GlyphLogic.cs" />
@@ -58,10 +59,10 @@
     </Compile>
     <Compile Include="IAction\IAction.cs" />
     <Compile Include="ClickTool\ClickTool.cs" />
+    <Compile Include="IAction\MoveAction.cs" />
     <Compile Include="IGlyph\IGlyph.cs" />
     <Compile Include="IGlyphLogic.cs" />
     <Compile Include="IGlyph\Line.cs" />
-    <Compile Include="IAction\MoveAction.cs" />
     <Compile Include="ClickTool\MoveTool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

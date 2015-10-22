@@ -2,15 +2,15 @@
 using System.Windows.Forms;
 
 namespace hw4 {
+    /// <summary>
+    /// Represents simple line.
+    /// Allows to move itself.
+    /// </summary>
     public class Line : IGlyph {
+
         public Line(Point start, Point end) {
             this.Start = start;
             this.End = end;
-
-            var dx = end.X - start.X;
-            var dy = end.Y - start.Y;
-            this.sqrLength = dx * dx + dy * dy;
-            this.dVector = new Point(dx, dy);
 
             Selected = LineEnds.nothing;
         }
@@ -20,40 +20,43 @@ namespace hw4 {
             pen.EndCap = System.Drawing.Drawing2D.LineCap.DiamondAnchor;
             g.DrawLine(pen, Start, End);
         }
-        public bool IsIntersects(Point p) {
-            double sqrDist;
 
+        public bool IsIntersects(Point p) {
+            
             /// Calc distance between point p and start of the line.
-            var dSx = p.X - Start.X;
-            var dSy = p.Y - Start.Y;
-            sqrDist = dSx * dSx + dSy * dSy;
-            if (sqrDist < sqrIntersectionRange) {
+            if (calcSqrDist(p, Start) < sqrIntersectionRange) {
                 Selected = LineEnds.start;
                 return true;
             }
 
             /// Calc distance between point p and end of the line.
-            var dEx = End.X - p.X;
-            var dEy = End.Y - p.Y;
-            sqrDist = dEx * dEx + dEy * dEy;
-            if (sqrDist < sqrIntersectionRange) {
+            if (calcSqrDist(End, p) < sqrIntersectionRange) {
                 Selected = LineEnds.end;
                 return true;
             }
 
             /// Calc distance between point p and the line itself.
+            var dx = End.X - Start.X;
+            var dy = End.Y - Start.Y;
+            var sqrLength = dx * dx + dy * dy;
+            var dVector = new Point(dx, dy);
+
             double vectorMult = -dVector.Y * p.X + dVector.X * p.Y +
                 (Start.X * End.Y - End.X * Start.Y);
-            sqrDist = vectorMult * vectorMult / sqrLength;
+            var sqrDist = vectorMult * vectorMult / sqrLength;
             return sqrDist < sqrIntersectionRange;
         }
 
-        public IAction MouseDown(MouseEventArgs e) {
-            return new VoidAction();
-        }
+
+        public IAction MouseDown(MouseEventArgs e) => new VoidAction();
+
+        public IAction MouseMove(MouseEventArgs e) => new VoidAction();
+
         public IAction MouseUp(MouseEventArgs e) {
+            Selected = LineEnds.nothing;
             return new VoidAction();
         }
+
         public IAction Move(Point p) {
             Point oldP;
             if (Selected == LineEnds.start) {
@@ -62,22 +65,24 @@ namespace hw4 {
             } else if (Selected == LineEnds.end) {
                 oldP = End;
                 End = p;
-            } else {
-                return new VoidAction();
             }
-            var wasSelected = Selected;
-            Selected = LineEnds.nothing;
-            return new MoveLineAction(this, oldP, p, wasSelected);
+            return new VoidAction();
         }
 
 
         public enum LineEnds { start, end, nothing }
+
         public LineEnds Selected { get; set; }
         public Point Start { get; private set; }
         public Point End { get; private set; }
 
-        private Point dVector;
-        private int sqrLength;
+
+        private double calcSqrDist(Point p1, Point p2) {
+            var dx = p1.X - p2.X;
+            var dy = p1.Y - p2.Y;
+            return dx * dx + dy * dy;
+        }
+
         private const int sqrIntersectionRange = 25;
     }
 }

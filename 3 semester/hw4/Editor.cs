@@ -9,28 +9,30 @@ namespace hw4 {
     /// (undo/redo, clicks, buttons etc.).
     /// </summary>
     public partial class Editor : Form {
+
         public Editor() {
             InitializeComponent();
 
-            core = new GlyphLogic(canvas);
             g = canvas.CreateGraphics();
+            core = new GlyphLogic(canvas, g);
             history = new ActionHistory();
 
             /// По полученной информации создает кнопки выбора режима (или: tools)
             /// пр.: режим добавления линии (AddLineTool), режим добавления еще чего-то
             availableTools = core.AvailableTools;
-            toolButtons = new ToolStripButton[availableTools.Count];
+            toolset = new ToolStripButton[availableTools.Count];
             int i = 0;
             foreach (var tool in availableTools) {
                 var newMenuTool = new ToolStripButton(tool.Info);
 
-                this.undoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-                this.undoButton.Name = tool.Info + "Button";
-                this.undoButton.Size = new System.Drawing.Size(40, 22);
+                newMenuTool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+                newMenuTool.Name = tool.Info + "Button";
+                newMenuTool.Size = new System.Drawing.Size(40, 22);
 
                 newMenuTool.Click += new EventHandler(tool.ChangeTool);
+                newMenuTool.Click += new EventHandler(this.tool_Clicked);
 
-                toolButtons[i] = newMenuTool;
+                toolset[i] = newMenuTool;
                 ++i;
 
                 tools.Items.Add(newMenuTool);
@@ -41,21 +43,36 @@ namespace hw4 {
 
         private void canvas_MouseDown(object sender, MouseEventArgs e) {
             var action = core.MouseDown(e);
-            if (action is VoidAction) {
-            } else {
+            if (!(action is VoidAction)) {
                 history.Log(action);
             }
-            core.Draw(g);
-            this.Update();
         }
+
+        private void canvas_MouseMove(object sender, MouseEventArgs e) {
+            var action = core.MouseMove(e);
+            if (!(action is VoidAction)) {
+                history.Log(action);
+            }
+        }
+
         private void canvas_MouseUp(object sender, MouseEventArgs e) {
             var action = core.MouseUp(e);
-            if (action is VoidAction) {
-            } else {
+            if (!(action is VoidAction)) {
                 history.Log(action);
             }
-            core.Draw(g);
-            this.Update();
+        }
+
+        /// <summary>
+        /// Occurs when tool button from toolset clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tool_Clicked(object sender, EventArgs e) {
+            foreach (var tool in toolset) {
+                tool.Checked = false;
+            }
+            var clickedTool = sender as ToolStripButton;
+            clickedTool.Checked = true;
         }
 
         private void undoButton_Click(object sender, EventArgs e) {
@@ -63,6 +80,7 @@ namespace hw4 {
             core.Draw(g);
             this.Update();
         }
+
         private void redoButton_Click(object sender, EventArgs e) {
             history.Redo().Execute();
             core.Draw(g);
@@ -75,10 +93,6 @@ namespace hw4 {
         private ActionHistory history;
 
         private List<ClickTool> availableTools;
-        private ToolStripButton[] toolButtons;
-
-        private void canvas_Resize(object sender, EventArgs e) {
-            g = canvas.CreateGraphics();
-        }
+        private ToolStripButton[] toolset;
     }
 }
