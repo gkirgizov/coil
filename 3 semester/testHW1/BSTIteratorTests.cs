@@ -16,7 +16,7 @@ namespace testHW1 {
             tree.Add(4);
             tree.Add(16);
             tree.Add(64);
-            iterator = tree.ReturnIterator();
+            iterator = tree.GetEnumerator();
 
             breadthFirstOrderList = new List<int>();
             breadthFirstOrderList.Add(8);
@@ -29,24 +29,26 @@ namespace testHW1 {
         }
 
         [TestMethod]
-        public void TestIsEmpty() {
+        public void TestEmptyTree() {
             tree = new BinarySearchTree();
-            iterator = tree.ReturnIterator();
-            Assert.IsTrue(iterator.IsEmpty());
+            iterator = tree.GetEnumerator();
+            Assert.IsFalse(iterator.MoveNext());
         }
 
         [TestMethod]
         public void TestReset() {
-            var first = iterator.Next();
+            var first = iterator.Current;
+            iterator.MoveNext();
             iterator.Reset();
-            Assert.AreEqual(first, iterator.Next());
+            Assert.AreEqual(first, iterator.Current);
         }
 
         [TestMethod]
         public void TestNextBreadthFirst() {
-            for (int i = 0; !iterator.IsEmpty(); ++i) {
-                Assert.AreEqual(breadthFirstOrderList[i], iterator.Next());
-                Assert.IsFalse(i > 6);
+            int i = 0;
+            foreach (var value in tree) {
+                Assert.AreEqual(breadthFirstOrderList[i], value);
+                ++i;
             }
         }
 
@@ -62,25 +64,15 @@ namespace testHW1 {
             depthFirstOrderList.Add(64);
 
             tree.Mode = BSTIterator<int>.IteratorMode.DepthFirst;
-            iterator = tree.ReturnIterator();
-            for (int i = 0; !iterator.IsEmpty(); ++i) {
-                Assert.AreEqual(depthFirstOrderList[i], iterator.Next());
-                Assert.IsFalse(i > 6);
-            }
-        }
-
-        [TestMethod]
-        public void TestRemove() {
-            var removingData = iterator.Current;
-            Assert.IsTrue(iterator.Remove());
-            for (; !iterator.IsEmpty(); iterator.Remove()) {
-                Assert.IsFalse(tree.Contains(removingData));
-                removingData = iterator.Current;
+            int i = 0;
+            foreach (var value in tree) {
+                Assert.AreEqual(depthFirstOrderList[i], value);
+                ++i;
             }
         }
 
         BinarySearchTree tree;
-        IIterator<int> iterator;
+        IEnumerator<int> iterator;
         List<int> breadthFirstOrderList;
     }
 }

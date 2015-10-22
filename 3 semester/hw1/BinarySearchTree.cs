@@ -1,5 +1,9 @@
-﻿namespace hw1 {
-    public class BinarySearchTree : IBinaryTree<int>, IIterable<int> {
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace hw1 {
+    public class BinarySearchTree : IBinaryTree<int> {
 
         public BinarySearchTree(BSTIterator<int>.IteratorMode mode = BSTIterator<int>.IteratorMode.BreadthFirst) {
             Count = 0;
@@ -117,8 +121,12 @@
             return false;
         }
 
-        public IIterator<int> ReturnIterator() {
+        public IEnumerator<int> GetEnumerator() {
             return new BSTIterator<int>(this, root, Mode);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return GetEnumerator();
         }
 
         public int Count { get; private set; }
