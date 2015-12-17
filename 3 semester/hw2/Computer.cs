@@ -6,10 +6,12 @@ namespace hw2 {
     /// Can send, handle messages and output info about itself.
     /// </summary>
     public class Computer {
+
         public Computer(OpSystem os) {
             OS = os;
             messages = new Queue<IMessage>();
         }
+
         public Computer(OpSystem os, ComputerState initState)
             : this(os) {
 

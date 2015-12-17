@@ -60,6 +60,6 @@ namespace hw2 {
         /// <summary>
         /// One of the possible characteristics of the state.
         /// </summary>
-        private int stability = 0;
+        protected int stability = 0;
     }
 }

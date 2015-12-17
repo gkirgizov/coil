@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 
 namespace hw2 {
+    /// <summary>
+    /// The main app entity.
+    /// Implements app logic concerning network work.
+    /// </summary>
     public class Network {
+
         public Network(ProbabilityLogic logic = null) {
             network = new Graph<Computer>();
             probLogic = logic ?? new ProbabilityLogic();
         }
+
         public Network(ICollection<Computer> computers,
             List<List<int>> links,
-            ProbabilityLogic logic = null) : this() {
+            ProbabilityLogic logic = null) : this(logic) {
 
             network = new Graph<Computer>(computers, links);
         }
@@ -63,7 +69,7 @@ namespace hw2 {
         /// Start network.
         /// </summary>
         public void Run() {
-            string control = "n";
+            const string control = "n";
             OutputNetwork();
             while (!IsNetworkStable()) {
                 Console.WriteLine();
