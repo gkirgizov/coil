@@ -1,7 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace hw1 {
-    public interface IBinaryTree<T>{
+    public interface IBinaryTree<T> : IEnumerable<T> {
 
         /// <summary>
         /// Add new data to the tree.
