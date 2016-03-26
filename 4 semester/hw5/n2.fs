@@ -96,7 +96,6 @@ type Tree<'T when 'T : comparison>() =
                 | _ -> cont tr
             t <- add t <| fun x -> x
 
-        //TODO cont
         member self.Remove(value) =
             let rec lastLeft tr cont =
                 match tr with
