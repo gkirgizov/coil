@@ -3,12 +3,16 @@
 open System
 open System.Collections
 
+/// Represents an Operation System
 type OS =
     | Windows
     | Linux
     | Solaris
     | OSX
     with
+
+    /// Returns vulnerability to viruses 
+    /// expressed in single float number
     member self.Vulnerability =
         match self with
         | Windows -> 0.7
@@ -23,6 +27,8 @@ type OS =
         | Solaris -> "Solaris"
         | OSX -> "OSX"
 
+/// Represents a single node in network
+/// with mutable state : infected or not
 type Computer(os : OS, isInfected_, r : System.Random) = 
     member val IsInfected = isInfected_ with get, set
         
@@ -31,11 +37,13 @@ type Computer(os : OS, isInfected_, r : System.Random) =
 
     member self.OS = os
 
+/// Represents a whole network and incapsulates app logic
 type Network(comps_, links_, ?r_) =
     let r = if r_.IsSome then Option.get r_ else new Random()
     let comps : Computer list = comps_
     let links : bool list list = links_
     
+    /// Returns nodes to which specified node is linked
     let neighbours cl =
         let rec neighbours_ cl i acc =
             let i' = i + 1
@@ -45,6 +53,13 @@ type Network(comps_, links_, ?r_) =
             | [] -> List.rev acc
         neighbours_ cl 0 [] 
 
+    /// Include app random logic
+    let tryToInfect(comp : Computer) =
+        match r.NextDouble() * comp.OS.Vulnerability with
+        | a when a > 0.5 -> comp.IsInfected <- true
+        | _ -> ()
+
+    /// Instantiate network with random computers (random OS and random state)
     new(numComp, ?r_) =
         let r = if r_.IsSome then Option.get r_ else new Random()
         let randomOS () =
@@ -78,11 +93,7 @@ type Network(comps_, links_, ?r_) =
 
         print (comps, links) 1 ""
 
-    member self.TryToInfect(comp : Computer) =
-        match r.NextDouble() * comp.OS.Vulnerability with
-        | a when a > 0.5 -> comp.IsInfected <- true
-        | _ -> ()
-
+    /// Returns true if all nodes are infected
     member self.IsNetworkDoomed =
         let rec check (cl : Computer list) =
             match cl with 
@@ -91,6 +102,7 @@ type Network(comps_, links_, ?r_) =
             | [] -> true
         check comps
 
+    /// Execute single step: send viruses and handle them
     member self.ExecStep() = 
         let send =
             let rec send_ (cl : Computer list) ll adressees =
@@ -104,12 +116,13 @@ type Network(comps_, links_, ?r_) =
         let rec receive cl =
             match cl with 
             | h :: t -> 
-                self.TryToInfect comps.[h - 1]
+                tryToInfect comps.[h - 1]
                 receive t
             | [] -> ()
 
         send |> receive
 
+    /// Start network until total infection or for specified number of steps
     member self.Exec(numSteps) =
         let rec exec i =
             self.ExecStep()
