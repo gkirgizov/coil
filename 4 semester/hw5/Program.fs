@@ -1,13 +1,15 @@
 ﻿// Learn more about F# at http://fsharp.org
 // See the 'F# Tutorial' project for more help.
 
+open System
+open n1
 open n2
 
 [<EntryPoint>]
 let main argv = 
     printfn "%A" argv
     
-    // Some tests for example
+    // Some tests for example (exercise #2)
     let t' = new Tree<int>()
     let t = t' :> ITree<int>
     t.Add(16)
@@ -33,6 +35,12 @@ let main argv =
 
     let printt = Seq.iter <| printf "%A "
     printt t
-    printf "\n"
+    printfn "\n"
+
+    // Example for exercise #1
+    let r = new Random(1)
+    let n = new Network(5, r)
+    printfn "\n\n%A\n" n
+    n.Exec(10);
 
     0 // return an integer exit code

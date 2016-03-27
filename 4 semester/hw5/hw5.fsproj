@@ -50,6 +50,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <None Include="App.config" />
     <Compile Include="n2.fs" />
+    <Compile Include="n1.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <PropertyGroup>
