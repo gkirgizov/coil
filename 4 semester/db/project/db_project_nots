@@ -1,0 +1,25 @@
+------Entities
+
++projects
+
++employees
+
++weak: issues
+
++weak: builds
+
+------Relations
+
++employees_projects
+
++statuses
+
++bug_sources
+
++manager (in Project)
+
++weak: Issue to Project
++weak: Build to Project
+
++ResponsibleTester (in Issue)
++ResponsibleProgrammer (in Issue)
