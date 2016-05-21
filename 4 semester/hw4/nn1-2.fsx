@@ -1,25 +1,32 @@
 ﻿    
-//#1
-let checkstring checkingPairs (s : string) = 
-    let checkchar (c : char) (openchar, closechar) = 
-        match c with
-        | сс when c = openchar -> (+) 1
-        | сс when c = closechar -> (+) -1
-        | _ -> fun x -> x
-    
-    let checkchars = List.map << checkchar
-    let invoke lx lf = List.map (fun (f, x) -> f x) <| List.zip lf lx
-    let checkPairs lpairs lacc c = invoke lacc <| checkchars c lpairs
+////#1
 
-    let rec checkstring_ s lacc =
-        match s with
-        | _ when List.exists ((>) 0) lacc -> false
-        | [] when List.sum lacc = 0 -> true
-        | [] -> false
-        | h :: t -> checkstring_ t <| checkPairs checkingPairs lacc h
-
+let checkstring (pairs : (char*char) list) (s : string) = 
     let toCharList s = [for c in s -> c]
-    checkstring_ (toCharList s) [for i in 1 .. List.length checkingPairs -> 0]
+
+    let (op, cl) =
+        let rec prepare_ pairs op cl = 
+            match pairs with 
+            | (o, c) :: t -> prepare_ t (o :: op) (c :: cl)
+            | [] -> (op, cl)
+        prepare_ pairs [] []
+        
+    let isOp c = List.contains c op
+
+    let isCorrespond o c = List.contains (o, c) pairs
+
+    let rec r_ lc stack =
+        match lc with
+        | [] when List.length stack = 0 -> true
+        | [] -> false
+        | h :: t when isOp h -> r_ t <| h :: stack
+        | h :: t -> 
+            match stack with
+            | [] -> false
+            | hs :: ts when isCorrespond hs h |> not -> false
+            | hs :: ts -> r_ t ts
+
+    r_ (toCharList s) []
 
 let braces = [ ('(', ')'); ('{', '}'); ('[', ']') ]
 let checkstringForBraces = checkstring braces
